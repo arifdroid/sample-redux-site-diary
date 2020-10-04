@@ -3,11 +3,11 @@ import { Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 
-const MainButton = ()=>{
+const MainButton = ({buttonText, textStyle, buttonStyle, onPress})=>{
     return(
-        <TouchableOpacity>
+        <TouchableOpacity style={buttonStyle} onPress={onPress}>
 
-            <Text></Text>
+            <Text style={textStyle}>{buttonText}</Text>
 
         </TouchableOpacity>
     )
