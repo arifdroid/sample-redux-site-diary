@@ -9,6 +9,10 @@ export const styles = StyleSheet.create({
     color:'white', alignSelf: 'center'
   },  
 
+  button_new_log:{
+    backgroundColor:'#FF5B74', padding: 15, marginBottom:20, alignSelf:'center', width:'70%', borderRadius:70
+  },  
+
 
   container: {
     flex: 1,

@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
-import React, { } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, Text, View } from 'react-native';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import MainButton from "../../../common/components/main-button/MainButton";
@@ -8,15 +8,17 @@ import { styles } from "../../../common/styles";
 
 const Login_View = ({navigation}) => {
 
-    const __onChangeText_email = (val) => {
+    const [email, setEmail] = useState(null);
+    const [pwd, setPwd] = useState(null);
 
-    }
-    const __onChangeText_password = (val) => {
 
-    }
+    const __onChangeText_email = (val) => setEmail(val)
+
+    const __onChangeText_password = (val) => setPwd(val)
 
     const __pressLogin = () => {
-
+        //api call
+        navigation.navigate('Main_List_ProjectLog_view')
     }
 
     return (
