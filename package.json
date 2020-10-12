@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "clean-cache": "rm -rf $TMPDIR/react-; rm -rf $TMPDIR/haste-; rm -rf $TMPDIR/metro-*; watchman watch-del-all; npm i; npx react-native start -- --reset-cache;"
+    "clean-cache": "rm -rf $TMPDIR/react-; rm -rf $TMPDIR/haste-; rm -rf $TMPDIR/metro-*; watchman watch-del-all; npm i; npx react-native start -- --reset-cache;",
+    "clean-android": "cd android; ./gradlew clean; ./gradlew cleanBuildCache; cd .."
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
@@ -22,6 +23,7 @@
     "react-native-dotenv": "^2.4.1",
     "react-native-elements": "^2.3.2",
     "react-native-gesture-handler": "^1.8.0",
+    "react-native-modal": "^11.5.6",
     "react-native-modal-dropdown-with-flatlist": "^0.7.1",
     "react-native-reanimated": "^1.13.1",
     "react-native-safe-area-context": "^3.1.8",

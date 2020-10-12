@@ -7,6 +7,7 @@ import TextInput_Only from '../../common/components/text-input-only/TextInput_On
 import { styles } from "../../common/styles";
 
 
+
 const sample_data = [{ project_name: 'projek KLCC', date_log: '22/02/2020' }, { project_name: 'projek KLCC', date_log: '12/10/2020' }, { project_name: 'projek KLCC', date_log: '08/11/2020' }]
 
 const Form_1_View = ({ navigation, route }) => {
@@ -18,16 +19,40 @@ const Form_1_View = ({ navigation, route }) => {
     useEffect(() => {
 
         if (route.params) {
-            let { new_form } = route.params
+            let { new_form, item } = route.params
+
+            if(item){ //here populate
+
+                console.log('item picked', item)
+
+
+            }else{ //create new
 
 
 
-        } else {
-            //load API
+
+            }
+        } 
+
+    }, [])
+
+    const _CreateApi = async () => {
+
+        try {
+
+             let data = await axios.get(`${URL}/api/list-site-logs`);
+
+            //  console.log('data is ', data)
+            setDataToRender(data.data);
+
+        } catch (error) {
 
         }
 
-    }, [])
+
+
+
+    }
 
     const __next = () => navigation.navigate('Form_2_Workforce_ViewView');
 
