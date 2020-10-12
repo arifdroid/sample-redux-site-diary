@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, TextInputComponent } from 'react-native';
+import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
 import CardView from 'react-native-cardview';
+
 import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
@@ -11,6 +12,8 @@ const sample_data = [{ project_name: 'projek KLCC', date_log: '22/02/2020' }, { 
 const Form_1_View = ({ navigation, route }) => {
 
     const [new_form_project, setNew_form_project] = useState(false);
+    // const [weather, setWeather] = useState(null)
+    const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     useEffect(() => {
 
@@ -30,6 +33,8 @@ const Form_1_View = ({ navigation, route }) => {
 
 
     }
+
+
 
 
     return (
@@ -83,7 +88,7 @@ const Form_1_View = ({ navigation, route }) => {
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
-                   
+                  
 
 
 

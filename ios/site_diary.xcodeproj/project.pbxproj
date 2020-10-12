@@ -194,7 +194,6 @@
 				E1937D7039416E57A59D9F5F /* Pods-site_diary-tvOSTests.debug.xcconfig */,
 				D26B1E2CBF3793CDD9970F56 /* Pods-site_diary-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
