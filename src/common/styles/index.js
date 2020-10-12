@@ -12,14 +12,39 @@ export const styles = StyleSheet.create({
   button_new_log:{
     backgroundColor:'#FF5B74', padding: 15, marginBottom:20, alignSelf:'center', width:'70%', borderRadius:70
   },  
-
-
-  container: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "stretch",
-    backgroundColor: "#F5FCFF",
+  textStyles: {    
+    fontSize: 14,
+    color: 'gray',
   },
+  container: {
+    backgroundColor: 'white',
+    marginHorizontal: 10,
+    paddingHorizontal: 10,
+    width:200,
+    // width:300,
+    // flex:1,
+    // alignItems: 'center',
+    justifyContent: 'center',
+    // flexDirection: 'row',
+    height: 35,
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
+    shadowOpacity: 0.5,
+    elevation: 1,
+    borderRadius:5,
+    shadowRadius: 5,
+    shadowOffset: {width: 1, height: 4},
+    marginTop:10
+  },
+  dropdownBox: {
+    marginTop: 20,
+    width: '45%',
+  },
+  dropdownTextHighlightStyle: {
+    backgroundColor: 'gray',
+    // fontFamily: 'Lato-Bold',
+    color: 'white',
+  },
+
   textInputContainer: {
     flex: 1,
     alignSelf: "stretch",

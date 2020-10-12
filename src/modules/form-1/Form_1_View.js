@@ -29,10 +29,7 @@ const Form_1_View = ({ navigation, route }) => {
 
     }, [])
 
-    const __pressLogin = () => {
-
-
-    }
+    const __next = () => navigation.navigate('Form_2_Workforce_ViewView');
 
 
 
@@ -95,7 +92,7 @@ const Form_1_View = ({ navigation, route }) => {
                 </View>
             </CardView>
 
-            <MainButton onPress={__pressLogin} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'Next'}></MainButton>
+            <MainButton onPress={__next} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'Next'}></MainButton>
 
         </SafeAreaView>)
 }
