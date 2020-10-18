@@ -5,6 +5,7 @@ import CardView from 'react-native-cardview';
 import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
+import moment from "moment";
 
 
 
@@ -13,7 +14,12 @@ const sample_data = [{ project_name: 'projek KLCC', date_log: '22/02/2020' }, { 
 const Form_1_View = ({ navigation, route }) => {
 
     const [new_form_project, setNew_form_project] = useState(false);
-    // const [weather, setWeather] = useState(null)
+    const [projectName, setProjectName] = useState('');
+    const [projectDate, setProjectDate] = useState('');
+    const [projectLocation, setProjectLocation] = useState('');
+    const [projectContractor, setProjectContractor] = useState('');
+    const [projectContractor_Number, setProjectContractor_Number] = useState('');
+    
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
     useEffect(() => {
@@ -24,6 +30,11 @@ const Form_1_View = ({ navigation, route }) => {
             if(item){ //here populate
 
                 console.log('item picked', item)
+                setProjectName(item.project_name);
+                setProjectLocation(item.location);
+                setProjectContractor(item.contractor);
+                setProjectContractor_Number(item.contractor_no);
+                setProjectDate(item.updatedAt)
 
 
             }else{ //create new
@@ -43,7 +54,7 @@ const Form_1_View = ({ navigation, route }) => {
              let data = await axios.get(`${URL}/api/list-site-logs`);
 
             //  console.log('data is ', data)
-            setDataToRender(data.data);
+            
 
         } catch (error) {
 
@@ -54,7 +65,37 @@ const Form_1_View = ({ navigation, route }) => {
 
     }
 
-    const __next = () => navigation.navigate('Form_2_Workforce_ViewView');
+    // useEffect(()=>{
+
+    //     let project_obj = {
+    //         projectName:projectName,
+    //         projectContractor: projectContractor,
+    //         projectLocation:projectLocation,
+    //         projectContractor_Number:projectContractor_Number
+    //     };
+
+
+
+    // }, [projectName, projectContractor, projectLocation, projectContractor_Number])
+
+    const __next = () => {
+
+        let project_obj= null;
+
+        if(projectName||projectContractor ||projectLocation ||projectContractor_Number){
+
+             project_obj = {
+                projectName:projectName,
+                projectContractor: projectContractor,
+                projectLocation:projectLocation,
+                projectContractor_Number:projectContractor_Number
+            };
+
+        }
+        
+
+        
+        navigation.navigate('Form_2_Workforce_ViewView',{project_obj} );}
 
 
 
@@ -85,28 +126,32 @@ const Form_1_View = ({ navigation, route }) => {
                     }}>
 
                     <Text style={{ fontSize: 12, marginRight: 10, alignSelf: 'flex-end' }}>
-                        Date</Text>
+                    Date { projectDate? moment(projectDate).format("DD-MM-YYYY"): null}</Text>
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Project Name</Text>
-                    <TextInput_Only valuePass={'cehck'} styles={{ width: '95%' }}
+                    <TextInput_Only valuePass={projectName} styles={{ width: '95%' }}
+                        onChangeText={(val)=>setProjectName(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Location</Text>
-                    <TextInput_Only valuePass={'kuala lumpur'} styles={{ width: '95%' }}
+                    <TextInput_Only valuePass={projectLocation} styles={{ width: '95%' }}
+                        onChangeText={(val)=>setProjectLocation(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Contractor</Text>
-                    <TextInput_Only valuePass={'contractor '} styles={{ width: '95%' }}
+                    <TextInput_Only valuePass={projectContractor} styles={{ width: '95%' }}
+                        onChangeText={(val)=>setProjectContractor(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Contractor No</Text>
-                    <TextInput_Only valuePass={'contractor '} styles={{ width: '95%' }}
+                    <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
+                        onChangeText={(val)=>setProjectContractor_Number(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 

@@ -107,8 +107,9 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
                                         </TouchableOpacity>
 
                                     </CardView>
-                                    
+                                    <View style={{}}>
                                     <MainButton onPress={__pressLogin} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'+ Create New Log'}></MainButton>
+                                    </View>
                                     </View>
                                 </>
                             )

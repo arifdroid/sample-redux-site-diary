@@ -1,4 +1,4 @@
-package com.site_diary;
+package com.site_diary_puo;
 
 import com.facebook.react.ReactActivity;
 

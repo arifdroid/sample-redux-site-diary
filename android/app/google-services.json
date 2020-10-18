@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "131486125476",
+    "firebase_url": "https://site-diary-student-e61b6.firebaseio.com",
+    "project_id": "site-diary-student-e61b6",
+    "storage_bucket": "site-diary-student-e61b6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131486125476:android:2bf78dc99db098356fc531",
+        "android_client_info": {
+          "package_name": "com.site_diary_puo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131486125476-hp9go09vr7ecv25ts281ipjtr76ft6d4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.site_diary_puo",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "131486125476-qugh4rhbq9qoeki2vi11vtncshfbo01k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABZPKX9TNbpp5l-dOy721if-BG29DCOiA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131486125476-qugh4rhbq9qoeki2vi11vtncshfbo01k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -23,8 +23,9 @@ const Form_2_Workforce_View = ({ navigation, route }) => {
     useEffect(() => {
 
         if (route.params) {
-            let { new_form } = route.params
+            let { project_obj } = route.params
 
+            console.log('project_obj ->', project_obj)
 
 
         } else {
