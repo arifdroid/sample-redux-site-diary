@@ -1,18 +1,31 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-  
-  button_login:{
-    backgroundColor:'#FF5B74', padding: 15, marginTop:20, alignSelf:'center', width:'80%', borderRadius:70
-  },  
-  button_text_login:{
-    color:'white', alignSelf: 'center'
-  },  
 
-  button_new_log:{
-    backgroundColor:'#FF5B74', padding: 15, marginTop:40, alignSelf:'center', width:'70%', borderRadius:70
-  },  
-  textStyles: {    
+  button_login: {
+    backgroundColor: '#FF5B74', padding: 15, marginTop: 20, alignSelf: 'center', width: '80%', borderRadius: 70
+  },
+  button_text_login: {
+    color: 'white', alignSelf: 'center'
+  },
+  codeFieldRoot: { marginTop: 30, width: '85%', alignSelf: 'center', },
+  cell: {
+    width: 40,
+    height: 40,
+    // lineHeight: 38,
+    fontSize: 20,
+    borderWidth: 2,
+    borderColor: 'pink',
+    textAlign: 'center',
+  },
+  focusCell: {
+    borderColor: 'gray',
+  },
+
+  button_new_log: {
+    backgroundColor: '#FF5B74', padding: 15, marginTop: 40, alignSelf: 'center', width: '70%', borderRadius: 70
+  },
+  textStyles: {
     fontSize: 14,
     color: 'gray',
   },
@@ -20,7 +33,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: 10,
     paddingHorizontal: 10,
-    width:200,
+    width: 200,
     // width:300,
     // flex:1,
     // alignItems: 'center',
@@ -30,10 +43,10 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOpacity: 0.5,
     elevation: 1,
-    borderRadius:5,
+    borderRadius: 5,
     shadowRadius: 5,
-    shadowOffset: {width: 1, height: 4},
-    marginTop:10
+    shadowOffset: { width: 1, height: 4 },
+    marginTop: 10
   },
   dropdownBox: {
     marginTop: 20,
