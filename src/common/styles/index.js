@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   },
 
   button_new_log: {
-    backgroundColor: '#FF5B74', padding: 15, marginTop: 40, alignSelf: 'center', width: '70%', borderRadius: 70
+    backgroundColor: '#FF5B74', padding: 15, marginTop: 40, alignSelf: 'center', width: '70%', borderRadius: 70, marginBottom:20
   },
   textStyles: {
     fontSize: 14,

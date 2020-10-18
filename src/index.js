@@ -8,6 +8,7 @@ import Main_List_ProjectLog_view from "./modules/main/Main_List_ProjectLog_view"
 import Form_1_View from "./modules/form-1/Form_1_View";
 import Form_2_Workforce_View from "./modules/form-2-workforce/Form_2_Workforce_View";
 import tac_View from "./modules/auth/tac/tac_View";
+import SignUpForm_View from "./modules/auth/signup/signUpForm_View";
 
 
 const Stack = createStackNavigator();
@@ -25,6 +26,7 @@ const StackNavigator = ()=>{
                 <Stack.Screen name='Form_1_View' component={Form_1_View} />
                 <Stack.Screen name='Form_2_Workforce_ViewView' component={Form_2_Workforce_View} />
                 <Stack.Screen name='tac_View' component={tac_View} />
+                <Stack.Screen name='SignUpForm_View' component={SignUpForm_View} />
 
             </Stack.Navigator>
         </NavigationContainer>

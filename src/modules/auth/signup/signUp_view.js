@@ -13,13 +13,13 @@ import {
 
 const CELL_COUNT = 6;
 
-const signUp_view = ({ navigation }) => {
+const signUp_view = ({ navigation, route }) => {
 
     const [phone, setPhone] = useState(null);
-    // const [tacRequested, setTacRequested] = useState(false);
+    
     const __onChangeText_phone = (val) => setPhone(val);
     const [confirm, setConfirm] = useState(null);
-    const [code, setCode] = useState('')
+    
 
     // code input view
 
@@ -37,22 +37,21 @@ const signUp_view = ({ navigation }) => {
             const confirmation = await auth().signInWithPhoneNumber(phone);
             console.log('confirmation code is', confirmation)
             setConfirm(confirmation);
-            //     let phonePassed = phone;
-            // navigation.navigate('tac_View', {phonePassed})
+         
 
         } catch (error) {
             console.log('confirmation code error is', error)
         }
-        // let phonePassed = phone;
-        // navigation.navigate('tac_View', {phonePassed})
+
     };
 
     const __confirmTAC = async () => {
         try {
 
             let check = await confirm.confirm(value);
-
-            // if(check) navigation.navigate('')
+            let phonePassed = phone;
+            if(check) navigation.navigate('SignUpForm_View', {phonePassed})
+            console.log('confirmation code TAC success is',)
 
         } catch (error) {
             console.log('confirmation code TAC error is', error)
@@ -64,10 +63,7 @@ const signUp_view = ({ navigation }) => {
 
             <View style={{ width: '85%', alignSelf: 'center' }}>
                 <TextInput_Only styles={{ flex: 3, marginRight: 20 }} onChangeText={__onChangeText_phone} imagePass={require('../../../common/asset/phone.png')}></TextInput_Only>
-                {/* <TextInput_Only styles={{ flex: 3, marginRight: 20 }} onChangeText={__onChangeText_password} imagePass={require('../../../common/asset/password.png')}></TextInput_Only> */}
-                {/* <TextInput_Only styles={{ flex: 3, marginRight: 20 }} onChangeText={text => setCode(text)} imagePass={require('../../../common/asset/password.png')}></TextInput_Only> */}
-                {/* <TextInput value={code} onChangeText={text => setCode(text)}  style={{width:'80%'}}/> */}
-
+               
                 {confirm == null ?
                     <>
 
