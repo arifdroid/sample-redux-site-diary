@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>131486125476-v21o4s0g8alqv5nf2qngafodvfltp5fe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.131486125476-v21o4s0g8alqv5nf2qngafodvfltp5fe</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>131486125476-hp9go09vr7ecv25ts281ipjtr76ft6d4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCAhogkUBJaX44bk9rU4VW0g6dhIQBOJVM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>131486125476</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.reactjs.native.example.site-diary2</string>
+	<key>PROJECT_ID</key>
+	<string>site-diary-student-e61b6</string>
+	<key>STORAGE_BUCKET</key>
+	<string>site-diary-student-e61b6.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:131486125476:ios:b455741e4d920a596fc531</string>
+	<key>DATABASE_URL</key>
+	<string>https://site-diary-student-e61b6.firebaseio.com</string>
+</dict>
+</plist>
