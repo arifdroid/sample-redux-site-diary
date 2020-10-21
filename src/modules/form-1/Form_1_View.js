@@ -36,8 +36,10 @@ const Form_1_View = ({ navigation, route }) => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isStopTimePickerVisible, setStopTimePickerVisibility] = useState(false);
 
-    const[startTime, setStartTime]=useState(null)
-    const[stopTime, setStopTime]=useState(null)
+    const[startTime, setStartTime]=useState('')
+    const[stopTime, setStopTime]=useState('')
+
+    // const[stopTime, setDateSelected]=useState(null)
 
     const showDatePicker = () => {
         setDatePickerVisibility(true);
@@ -127,17 +129,29 @@ const Form_1_View = ({ navigation, route }) => {
         let project_obj = null;
 
         if (projectName || projectContractor || projectLocation || projectContractor_Number) {
+            
+            let weather_now;
+            if(toggleCheckBox_rainy) weather_now = 'rainy'
+            else weather_now = 'sunny'
+            
+            let site_cond;
+            if(toggleCheckBox__site_condition) site_cond='wet'
+            else site_cond='dry';
 
             project_obj = {
                 projectName: projectName,
                 projectContractor: projectContractor,
                 projectLocation: projectLocation,
-                projectContractor_Number: projectContractor_Number
+                projectContractor_Number: projectContractor_Number,
+                weather: weather_now,
+                rain_start:startTime,
+                rain_stop:stopTime,
+                site_condition:site_cond
             };
 
         }
 
-
+        console.log('project data is', project_obj)
 
         navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
     }
