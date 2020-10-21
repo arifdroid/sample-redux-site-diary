@@ -28,6 +28,7 @@ const Form_1_View = ({ navigation, route }) => {
 
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     const [toggleCheckBox_rainy, setToggleCheckBox_rainy] = useState(false)
+    const [toggleCheckBox__site_condition, setToggleCheckBox_site_condition] = useState(false)
 
 
     //time picker
@@ -251,6 +252,21 @@ const Form_1_View = ({ navigation, route }) => {
                                         onCancel={hideStopTimePicker}
                                     />
                                 </View>
+
+                                <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Site Condition</Text>
+
+
+                        <CheckBox
+                            style={{ width: 130, marginLeft: 10, marginTop: 5 }}
+                            onClick={() => {
+                                setToggleCheckBox_site_condition(!toggleCheckBox__site_condition)
+                            }}
+                            uncheckedCheckBoxColor={'gray'}
+                            checkedCheckBoxColor={'red'}
+                            isChecked={toggleCheckBox__site_condition}
+                            leftText={"Slippery Wet"}
+                        />
 
 
                             </> :
