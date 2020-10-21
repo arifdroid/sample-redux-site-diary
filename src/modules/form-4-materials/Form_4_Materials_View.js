@@ -11,7 +11,7 @@ import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-han
 const data = ['malay', 'chinese', 'indian', 'bangladesh', 'nepal', 'vietnam', 'indonesians', 'others']
 
 
-const Form_3_Tools_View = ({ navigation, route }) => {
+const Form_4_Materials_View = ({ navigation, route }) => {
 
     const [new_form_project, setNew_form_project] = useState(false);
     const [toolsNumber, setToolsNumber] = useState(1);
@@ -40,7 +40,7 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
-        navigation.navigate('Form_4_Materials_View')
+
     }
 
     useEffect(()=>{
@@ -94,11 +94,11 @@ const Form_3_Tools_View = ({ navigation, route }) => {
                     <Text style={{ fontSize: 12, marginRight: 10, alignSelf: 'flex-end' }}>
                         Date</Text>
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Tools</Text>
+                        Materials</Text>
 
                     <View style={{flexDirection:'row',marginTop: 15,  marginLeft: 10, marginBottom:10}}>
                     <Text style={{ fontSize: 16, flex:1}}>
-                        Tools List</Text>
+                        Materials List</Text>
                         <Text style={{ fontSize: 16,flex:0.4 }}>
                         Quantity</Text>
                     </View>
@@ -144,7 +144,7 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
                     <TouchableOpacity onPress={() => setToolsNumber((prevState) => {
                         setToolsNumber(prevState + 1)
-                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: 'red' }}>+ add tools</Text></TouchableOpacity>
+                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: 'red' }}>+ add materials</Text></TouchableOpacity>
 
 
 
@@ -163,4 +163,4 @@ const Form_3_Tools_View = ({ navigation, route }) => {
         </SafeAreaView>)
 }
 
-export default Form_3_Tools_View;
+export default Form_4_Materials_View;
