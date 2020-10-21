@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, } from 'react-native';
+import { SafeAreaView, TextInput, Text, View, Button, } from 'react-native';
 import CardView from 'react-native-cardview';
 import CheckBox from 'react-native-check-box';
 
@@ -7,7 +7,9 @@ import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
 import moment from "moment";
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 
 
 
@@ -22,8 +24,46 @@ const Form_1_View = ({ navigation, route }) => {
     const [projectContractor, setProjectContractor] = useState('');
     const [projectContractor_Number, setProjectContractor_Number] = useState('');
 
+
+
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
     const [toggleCheckBox_rainy, setToggleCheckBox_rainy] = useState(false)
+
+
+    //time picker
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isStopTimePickerVisible, setStopTimePickerVisibility] = useState(false);
+
+    const[startTime, setStartTime]=useState(null)
+    const[stopTime, setStopTime]=useState(null)
+
+    const showDatePicker = () => {
+        setDatePickerVisibility(true);
+      };
+
+      const showStopTimePicker = () => {
+        setStopTimePickerVisibility(true);
+      };  
+     
+      const hideDatePicker = () => {
+        setDatePickerVisibility(false);
+      };
+      const hideStopTimePicker = () => {
+        setStopTimePickerVisibility(false);
+      };
+     
+      const handleConfirm = (date) => {
+        // console.log("A date has been picked: ", date.toString().substring(16,21));
+        setStartTime(date.toString().substring(16,21))
+        hideDatePicker();
+      };
+
+      const handleStopTimeConfirm = (date) => {
+        // console.log("A date has been picked: ", date.toString().substring(16,21));
+        setStopTime(date.toString().substring(16,21))
+        hideStopTimePicker();
+      };
 
     useEffect(() => {
 
@@ -107,90 +147,123 @@ const Form_1_View = ({ navigation, route }) => {
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView style={{flex:1}}>
-            <CardView
-                style={{
-                    borderRadius: 10,
-                    paddingVertical: 20,
-                    flex: 1,
-                    marginHorizontal: 30,
-                    // height: 130,
-                    backgroundColor: 'white',
-                    marginTop: 50,
-                    marginBottom: 80,
-                    paddingBottom:100
-                }}
-                cardElevation={4}
-                cardMaxElevation={4}
-                radius={10}
-
-            >
-                <View
+            <ScrollView style={{ flex: 1 }}>
+                <CardView
                     style={{
+                        borderRadius: 10,
+                        paddingVertical: 20,
                         flex: 1,
-                        marginHorizontal: 10,
-                    }}>
+                        marginHorizontal: 30,
+                        // height: 130,
+                        backgroundColor: 'white',
+                        marginTop: 50,
+                        marginBottom: 80,
+                        paddingBottom: 100
+                    }}
+                    cardElevation={4}
+                    cardMaxElevation={4}
+                    radius={10}
 
-                    <Text style={{ fontSize: 12, marginRight: 10, alignSelf: 'flex-end' }}>
-                        Date {projectDate ? moment(projectDate).format("DD-MM-YYYY") : null}</Text>
-                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Project Name</Text>
-                    <TextInput_Only valuePass={projectName} styles={{ width: '95%' }}
-                        onChangeText={(val) => setProjectName(val)}
-                        inputBackgroundStyle={{ height: 40 }}
-                    />
+                >
+                    <View
+                        style={{
+                            flex: 1,
+                            marginHorizontal: 10,
+                        }}>
 
-                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Location</Text>
-                    <TextInput_Only valuePass={projectLocation} styles={{ width: '95%' }}
-                        onChangeText={(val) => setProjectLocation(val)}
-                        inputBackgroundStyle={{ height: 40 }}
-                    />
+                        <Text style={{ fontSize: 12, marginRight: 10, alignSelf: 'flex-end' }}>
+                            Date {projectDate ? moment(projectDate).format("DD-MM-YYYY") : null}</Text>
+                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Project Name</Text>
+                        <TextInput_Only valuePass={projectName} styles={{ width: '95%' }}
+                            onChangeText={(val) => setProjectName(val)}
+                            inputBackgroundStyle={{ height: 40 }}
+                        />
 
-                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Contractor</Text>
-                    <TextInput_Only valuePass={projectContractor} styles={{ width: '95%' }}
-                        onChangeText={(val) => setProjectContractor(val)}
-                        inputBackgroundStyle={{ height: 40 }}
-                    />
+                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Location</Text>
+                        <TextInput_Only valuePass={projectLocation} styles={{ width: '95%' }}
+                            onChangeText={(val) => setProjectLocation(val)}
+                            inputBackgroundStyle={{ height: 40 }}
+                        />
 
-                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Contractor No</Text>
-                    <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
-                        onChangeText={(val) => setProjectContractor_Number(val)}
-                        inputBackgroundStyle={{ height: 40 }}
-                    />
+                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Contractor</Text>
+                        <TextInput_Only valuePass={projectContractor} styles={{ width: '95%' }}
+                            onChangeText={(val) => setProjectContractor(val)}
+                            inputBackgroundStyle={{ height: 40 }}
+                        />
 
-                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                        Current Weather</Text>
+                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Contractor No</Text>
+                        <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
+                            onChangeText={(val) => setProjectContractor_Number(val)}
+                            inputBackgroundStyle={{ height: 40 }}
+                        />
 
-               
-                    <CheckBox
-                        style={{ width: 130, marginLeft: 10, marginTop: 5 }}
-                        onClick={() => {
-                            setToggleCheckBox_rainy(!toggleCheckBox_rainy)
-                        }}
-                        uncheckedCheckBoxColor={'gray'}
-                        checkedCheckBoxColor={'red'}
-                        isChecked={toggleCheckBox_rainy}
-                        leftText={"Rainy Day"}
-                    />
-
-                    {toggleCheckBox_rainy == true?
-                    <>
-                    <Text style={{ marginTop: 20, fontSize: 16, marginLeft: 10 }}>
-                        Raining Period</Text>
-                    </>:
-                    <>
-                    </>
-                    }
+                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                            Current Weather</Text>
 
 
+                        <CheckBox
+                            style={{ width: 130, marginLeft: 10, marginTop: 5 }}
+                            onClick={() => {
+                                setToggleCheckBox_rainy(!toggleCheckBox_rainy)
+                            }}
+                            uncheckedCheckBoxColor={'gray'}
+                            checkedCheckBoxColor={'red'}
+                            isChecked={toggleCheckBox_rainy}
+                            leftText={"Rainy Day"}
+                        />
+
+                        {toggleCheckBox_rainy == true ?
+                            <>
+                                <Text style={{ marginTop: 20, fontSize: 16, marginLeft: 10 }}>
+                                    Raining Period</Text>
+                                <View>
+                                    {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
+                                    <TouchableOpacity onPress={showDatePicker}>
+                                    <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
+                                    Start time : {startTime}</Text>
+                                    </TouchableOpacity>
+                                    <DateTimePickerModal
+                                        mode='time'
+                                        locale="en_GB"
+                                        headerTextIOS="Pick a time"
+                                        isVisible={isDatePickerVisible}                                        
+                                        onConfirm={handleConfirm}
+                                        onCancel={hideDatePicker}
+                                    />
+                                </View>
+
+                                <View>
+                                    {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
+                                    <TouchableOpacity onPress={showStopTimePicker}>
+                                    <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
+                                    Stop time : {stopTime}</Text>
+                                    </TouchableOpacity>
+                                    <DateTimePickerModal
+                                        mode='time'
+                                        locale="en_GB"
+                                        headerTextIOS="Pick a time"
+                                        isVisible={isStopTimePickerVisible}                                        
+                                        onConfirm={handleStopTimeConfirm}
+                                        onCancel={hideStopTimePicker}
+                                    />
+                                </View>
+
+
+                            </> :
+                            <>
+                            </>
+                        }
 
 
 
-                </View>
-            </CardView>
+
+
+                    </View>
+                </CardView>
             </ScrollView>
 
             <MainButton onPress={__next} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'Next'}></MainButton>
