@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
+import { SafeAreaView, TextInput, Text, View, } from 'react-native';
 import CardView from 'react-native-cardview';
+import CheckBox from 'react-native-check-box';
 
 import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
 import moment from "moment";
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -19,15 +21,16 @@ const Form_1_View = ({ navigation, route }) => {
     const [projectLocation, setProjectLocation] = useState('');
     const [projectContractor, setProjectContractor] = useState('');
     const [projectContractor_Number, setProjectContractor_Number] = useState('');
-    
+
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
+    const [toggleCheckBox_rainy, setToggleCheckBox_rainy] = useState(false)
 
     useEffect(() => {
 
         if (route.params) {
             let { new_form, item } = route.params
 
-            if(item){ //here populate
+            if (item) { //here populate
 
                 console.log('item picked', item)
                 setProjectName(item.project_name);
@@ -37,13 +40,13 @@ const Form_1_View = ({ navigation, route }) => {
                 setProjectDate(item.updatedAt)
 
 
-            }else{ //create new
+            } else { //create new
 
 
 
 
             }
-        } 
+        }
 
     }, [])
 
@@ -51,10 +54,10 @@ const Form_1_View = ({ navigation, route }) => {
 
         try {
 
-             let data = await axios.get(`${URL}/api/list-site-logs`);
+            let data = await axios.get(`${URL}/api/list-site-logs`);
 
             //  console.log('data is ', data)
-            
+
 
         } catch (error) {
 
@@ -80,22 +83,23 @@ const Form_1_View = ({ navigation, route }) => {
 
     const __next = () => {
 
-        let project_obj= null;
+        let project_obj = null;
 
-        if(projectName||projectContractor ||projectLocation ||projectContractor_Number){
+        if (projectName || projectContractor || projectLocation || projectContractor_Number) {
 
-             project_obj = {
-                projectName:projectName,
+            project_obj = {
+                projectName: projectName,
                 projectContractor: projectContractor,
-                projectLocation:projectLocation,
-                projectContractor_Number:projectContractor_Number
+                projectLocation: projectLocation,
+                projectContractor_Number: projectContractor_Number
             };
 
         }
-        
 
-        
-        navigation.navigate('Form_2_Workforce_ViewView',{project_obj} );}
+
+
+        navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
+    }
 
 
 
@@ -103,6 +107,7 @@ const Form_1_View = ({ navigation, route }) => {
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView style={{flex:1}}>
             <CardView
                 style={{
                     borderRadius: 10,
@@ -112,7 +117,8 @@ const Form_1_View = ({ navigation, route }) => {
                     // height: 130,
                     backgroundColor: 'white',
                     marginTop: 50,
-                    marginBottom: 80
+                    marginBottom: 80,
+                    paddingBottom:100
                 }}
                 cardElevation={4}
                 cardMaxElevation={4}
@@ -126,41 +132,66 @@ const Form_1_View = ({ navigation, route }) => {
                     }}>
 
                     <Text style={{ fontSize: 12, marginRight: 10, alignSelf: 'flex-end' }}>
-                    Date { projectDate? moment(projectDate).format("DD-MM-YYYY"): null}</Text>
+                        Date {projectDate ? moment(projectDate).format("DD-MM-YYYY") : null}</Text>
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Project Name</Text>
                     <TextInput_Only valuePass={projectName} styles={{ width: '95%' }}
-                        onChangeText={(val)=>setProjectName(val)}
+                        onChangeText={(val) => setProjectName(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Location</Text>
                     <TextInput_Only valuePass={projectLocation} styles={{ width: '95%' }}
-                        onChangeText={(val)=>setProjectLocation(val)}
+                        onChangeText={(val) => setProjectLocation(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Contractor</Text>
                     <TextInput_Only valuePass={projectContractor} styles={{ width: '95%' }}
-                        onChangeText={(val)=>setProjectContractor(val)}
+                        onChangeText={(val) => setProjectContractor(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Contractor No</Text>
                     <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
-                        onChangeText={(val)=>setProjectContractor_Number(val)}
+                        onChangeText={(val) => setProjectContractor_Number(val)}
                         inputBackgroundStyle={{ height: 40 }}
                     />
 
-                  
+                    <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
+                        Current Weather</Text>
+
+               
+                    <CheckBox
+                        style={{ width: 130, marginLeft: 10, marginTop: 5 }}
+                        onClick={() => {
+                            setToggleCheckBox_rainy(!toggleCheckBox_rainy)
+                        }}
+                        uncheckedCheckBoxColor={'gray'}
+                        checkedCheckBoxColor={'red'}
+                        isChecked={toggleCheckBox_rainy}
+                        leftText={"Rainy Day"}
+                    />
+
+                    {toggleCheckBox_rainy == true?
+                    <>
+                    <Text style={{ marginTop: 20, fontSize: 16, marginLeft: 10 }}>
+                        Raining Period</Text>
+                    </>:
+                    <>
+                    </>
+                    }
+
+
 
 
 
                 </View>
             </CardView>
+            </ScrollView>
 
             <MainButton onPress={__next} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'Next'}></MainButton>
 
