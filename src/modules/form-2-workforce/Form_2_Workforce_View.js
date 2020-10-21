@@ -37,6 +37,7 @@ const Form_2_Workforce_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
+        navigation.navigate('Form_3_Tools_View')
 
     }
 

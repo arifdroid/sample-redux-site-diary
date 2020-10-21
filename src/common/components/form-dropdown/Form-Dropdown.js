@@ -4,7 +4,7 @@ import ModalDropdown from 'react-native-modal-dropdown-with-flatlist';
 import TextInput_Only from '../text-input-only/TextInput_Only';
 import { styles } from "../../../common/styles";
 
-const Form_Dropdown = ({optionsPass, selectedValue, thisQuantity}) => {
+const Form_Dropdown = ({optionsPass, selectedValue, thisQuantity, valPass}) => {
     const ref_modalDropDown = useRef(null);
     return (
 
@@ -22,7 +22,8 @@ const Form_Dropdown = ({optionsPass, selectedValue, thisQuantity}) => {
                 />
             </TouchableOpacity>
             <View style={{ marginLeft: 20, justifyContent:'center' }}>
-                <TextInput_Only valuePass={'3'}
+                <TextInput_Only 
+                    valuePass={valPass}
                     onChangeText={(val)=>thisQuantity(val)}
                     styles={{ width: 30, color: 'gray', alignItems: 'center', }}
                     inputBackgroundStyle={{ height: 35 }}
