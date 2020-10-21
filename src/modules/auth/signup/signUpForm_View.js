@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { SafeAreaView, TextInput, Text, View, CheckBox, Alert } from 'react-native';
 import CardView from 'react-native-cardview';
-
+import { URL, URL_DEV_2, url_api_key } from "@env"
 
 import TextInput_Only from '../../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../../common/styles";
 import moment from "moment";
 import MainButton from '../../../common/components/main-button/MainButton';
+import axios from 'react-native-axios/lib/axios';
+import { UserData_Context } from '../../../context-provider/UserContext';
 
 
 
@@ -20,6 +22,7 @@ const SignUpForm_View = ({ navigation, route }) => {
     const [company, setCompany] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
+    const [refToken_context, setRefToken_context ] = useContext(UserData_Context)    
     
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
@@ -43,17 +46,29 @@ const SignUpForm_View = ({ navigation, route }) => {
 
     }, [])
 
-    const _CreateApi = async () => {
+    const _CreateApi = async() => {
 
         try {
 
-             let data = await axios.get(`${URL}/api/list-site-logs`);
+            //  let data = await axios.get(`${URL}/api/list-site-logs`);
 
-            //  console.log('data is ', data)
-            
+            let data = {
+                userName:userName,
+                position:position,
+                company:company,
+                phone:phone,
+                pwd:password
+            }
+
+            let token =  await axios.post(`${URL_DEV_2}/api/auth/sign-up?api_key=${url_api_key}`,{data});            
+            if(token){
+                setRefToken_context(token.data)
+                navigation.navigate('Main_List_ProjectLog_view')
+            }
 
         } catch (error) {
-
+            // console.log('error is', error)
+            Alert.alert('error server')
         }
 
 
@@ -62,7 +77,7 @@ const SignUpForm_View = ({ navigation, route }) => {
     }
 
 
-    const __next = () => {
+    const __next = async() => {
 
         // let project_obj= null;
 
@@ -76,10 +91,18 @@ const SignUpForm_View = ({ navigation, route }) => {
         //     };
 
         // }
+
+        // console.log('press')
         
+        await _CreateApi();
+
+        // if(token) { 
+        //     setRefToken_context(token.data)
+        //     navigation.navigation('Main_List_ProjectLog_view')
+        // }
 
         
-        navigation.navigate('Form_2_Workforce_ViewView',{project_obj} );
+        // navigation.navigate('Form_2_Workforce_ViewView',{project_obj} );
     }
 
 

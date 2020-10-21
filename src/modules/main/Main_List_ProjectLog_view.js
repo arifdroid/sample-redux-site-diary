@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Button, ActivityIndicator,Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CardView from 'react-native-cardview';
 import MainButton from '../../common/components/main-button/MainButton';
 import { styles } from "../../common/styles";
-import { URL } from "@env"
+import { URL, URL_DEV_2 } from "@env"
 import axios from 'react-native-axios';
 import moment from "moment";
 import Modal_Error from '../../common/components/modal-error/Modal_Error';
+import { UserData_Context } from '../../context-provider/UserContext';
 
 const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
@@ -18,24 +19,28 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
     }, [])
 
     const [dataToRender, setDataToRender] = useState(null);
-    // const [modal_error, setModal_error] = useState(false);
+    const [refToken_context, setRefToken_context ] = useContext(UserData_Context)    
 
-    // if (modal_error) console.log('modal error is ->', modal_error)
+    
 
     const _MainPageAPI = async () => {
 
         try {
 
-            console.log('check', URL)
+            
+            let config ={
+                headers:{
+                    'Authorization':`Bearer ${refToken_context}`
+                }
+            }
 
-            let data = await axios.get(`${URL}/api/list-site-logs`)
+            let data = await axios.get(`${URL_DEV_2}/api/list-site-logs`, config)
 
-            //  console.log('data is ->', data)
+             
             setDataToRender(data.data);
 
         } catch (error) {
-            console.log('error is ->', error)
-            // setModal_error(true)
+            console.log('error is ->', error)            
             Alert.alert('error server')
             
         }
