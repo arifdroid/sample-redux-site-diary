@@ -20,18 +20,18 @@ const Form_4_Materials_View = ({ navigation, route }) => {
     const [toolsEditListener, setToolsEditListener] = useState('');
     const [toolsQuantityEditListener, setToolsQuantityEditListener] = useState('');
 
-    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
-
-
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate] = useContext(UserData_Context);
 
     const [toolsArray, setToolsArray] = useState([]);
+
+    const [navNext, setNavNext] = useState(false);
+    const [pressNext, setPressNext] = useState(false);
 
     useEffect(() => {
 
         if (route.params) {
-           
 
-                console.log('current project data is', currentProjectCreate)
+            console.log('current project data is', currentProjectCreate)
 
         } else {
             //load API
@@ -42,31 +42,96 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
-        navigation.navigate('Form_5_Finalized_View')
+        // navigation.navigate('Form_5_Finalized_View')
+
+        if (toolsEditListener != '') {
+
+            setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
+            setPressNext(true);
+
+
+        } else {
+            Alert.alert('please insert values')
+        }
 
     }
 
-    useEffect(()=>{
-        if(toolsNumber){
-            setToolsArray((prevState)=>{
+    useEffect(() => {
+
+        if (toolsArray && pressNext) {
+            setNavNext(true)
+        }
+
+    }, [toolsArray])
+
+    useEffect(() => {
+        if (toolsNumber) {
+            setToolsArray((prevState) => {
                 let arr = [...prevState];
-                arr.forEach((el,i)=>{
-                    if(el.toolsNumber == (toolsNumber-1)){
+                arr.forEach((el, i) => {
+                    if (el.toolsNumber == (toolsNumber - 1)) {
                         el.name = toolsEditListener.name
                         el.quantity = toolsQuantityEditListener.quantity
                     }
                 })
-                arr.push({name:'edit', quantity:0, toolsNumber:toolsNumber});
+                arr.push({ name: 'edit', quantity: 0, toolsNumber: toolsNumber });
                 return arr;
 
             });
 
-            
+
         }
-    },[toolsNumber])
+    }, [toolsNumber])
 
 
     // console.log('toolsArray ==>', toolsArray)
+
+    useEffect(() => {
+
+        if (navNext) {
+
+
+            __cleanUpData();
+
+        }
+
+    }, [navNext])
+
+    const __cleanUpData = () => {
+
+        let filter_edit = toolsArray.filter(el => el.name != 'edit')
+
+
+        let filter_duplicate = [];
+
+        let filter_edit_length = filter_edit.length;
+
+        if (filter_edit_length > 1) {
+
+            if (filter_edit[filter_edit_length - 1].name == filter_edit[filter_edit_length - 2].name) {
+                filter_edit.pop();
+                filter_duplicate = filter_edit;
+            } else {
+                filter_duplicate = filter_edit
+            }
+        } else {
+            filter_duplicate = filter_edit
+        }
+
+
+        let materials = filter_duplicate.map(el => {
+            return {                
+                material_name: el.name,
+                number: el.quantity
+            }
+        })
+
+
+        let project_object = { ...currentProjectCreate, materials }
+        setProjectCreate(project_object)
+        navigation.navigate('Form_5_Finalized_View')
+
+    }
 
     return (
 
@@ -99,45 +164,45 @@ const Form_4_Materials_View = ({ navigation, route }) => {
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Materials</Text>
 
-                    <View style={{flexDirection:'row',marginTop: 15,  marginLeft: 10, marginBottom:10}}>
-                    <Text style={{ fontSize: 16, flex:1}}>
-                        Materials List</Text>
-                        <Text style={{ fontSize: 16,flex:0.4 }}>
-                        Quantity</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 15, marginLeft: 10, marginBottom: 10 }}>
+                        <Text style={{ fontSize: 16, flex: 1 }}>
+                            Materials List</Text>
+                        <Text style={{ fontSize: 16, flex: 0.4 }}>
+                            Quantity</Text>
                     </View>
 
-                    
+
 
 
                     <FlatList
                         data={toolsArray}
-                        renderItem={({ item , index}) => {
+                        renderItem={({ item, index }) => {
                             return (
                                 <>
-                                <View style={{ flexDirection: 'row', marginLeft:10,  marginBottom:3 , flex:1, marginEnd:10}}>
-                                    <View style={{flex:1, backgroundColor:'#f0f4ff', height:30, justifyContent:'center'}}>
-                                    <TextInput  styles={{  }}
-                                    onChangeText={val=>{
-                                        setToolsEditListener({name:val, toolsNumber:item.toolsNumber})
-                                    }}
+                                    <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                        <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput styles={{}}
+                                                onChangeText={val => {
+                                                    setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
+                                                }}
 
-                                    />
-                                    
+                                            />
+
+                                        </View>
+                                        <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput
+                                                styles={{ backgroundColor: '#C3CDE6' }}
+                                                onChangeText={val => {
+                                                    setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
+                                                }}
+
+                                            />
+
+                                        </View>
+
+
                                     </View>
-                                    <View style={{marginLeft:10, flex:0.4, backgroundColor:'#f0f4ff', height:30,justifyContent:'center'}}>
-                                    <TextInput                                     
-                                     styles={{backgroundColor:'#C3CDE6'}}
-                                     onChangeText={val=>{
-                                        setToolsQuantityEditListener({quantity:val, toolsNumber:item.toolsNumber})
-                                    }}
 
-                                    />
-                                    
-                                    </View>
-
-
-                                </View>
-                                
                                 </>
                             )
 

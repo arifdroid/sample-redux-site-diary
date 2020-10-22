@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, Text, View, Button, } from 'react-native';
 import CardView from 'react-native-cardview';
 import CheckBox from 'react-native-check-box';
@@ -9,6 +9,7 @@ import { styles } from "../../common/styles";
 import moment from "moment";
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { UserData_Context } from '../../context-provider/UserContext';
 
 
 
@@ -27,30 +28,13 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
     const [project_SVComment, setProject_SVComment] = useState('');
 
 
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate] = useContext(UserData_Context);
+
 
   
     useEffect(() => {
 
-        if (route.params) {
-            let { new_form, item } = route.params
-
-            if (item) { //here populate
-
-                console.log('item picked', item)
-                setProjectName(item.project_name);
-                setProjectLocation(item.location);
-                setProjectContractor(item.contractor);
-                setProjectContractor_Number(item.contractor_no);
-                setProjectDate(item.updatedAt)
-
-
-            } else { //create new
-
-
-
-
-            }
-        }
+        console.log('final page project date', currentProjectCreate)
 
     }, [])
 
