@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Button, ActivityIndicator, Alert } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Button, ActivityIndicator, Alert, RefreshControl } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CardView from 'react-native-cardview';
 import MainButton from '../../common/components/main-button/MainButton';
@@ -20,8 +20,8 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
     const [dataToRender, setDataToRender] = useState(null);
     const [refToken_context, setRefToken_context,currentUser, setCurrentUser] = useContext(UserData_Context)
-
-    // const [name, setName]= useState('');
+    const [refreshing, setRefreshing] = useState(false);
+    
 
 
 
@@ -45,6 +45,8 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
             setDataToRender(data.data);
 
+            return;
+
         } catch (error) {
             console.log('error is ->', error)
             Alert.alert('error server')
@@ -56,7 +58,27 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
     }
 
-    console.log('current user is->', currentUser)
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        
+          try {
+            // let response = await fetch(
+            //   'http://www.mocky.io/v2/5e3315753200008abe94d3d8?mocky-delay=2000ms',
+            // );
+            // let responseJson = await response.json();
+            // console.log(responseJson);
+            // setListData(responseJson.result.concat(initialData));
+            // setRefreshing(false)
+
+            await _MainPageAPI().then()
+            setRefreshing(false)
+
+
+          } catch (error) {
+            console.error('error refresh is',error);
+          }
+        
+      }, [refreshing]);
 
     const __select = (item) => {
         navigation.navigate('Form_1_View', { item })
@@ -88,6 +110,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
                     </> :
                     <FlatList
                         data={dataToRender}
+                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}></RefreshControl>}
                         renderItem={({ item }) => {
                             return (
                                 <>
