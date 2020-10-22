@@ -12,6 +12,7 @@ import SignUpForm_View from "./modules/auth/signup/signUpForm_View";
 import Form_3_Tools_View from "./modules/form-3-tools/Form_3_Tools_View";
 import Form_4_Materials_View from "./modules/form-4-materials/Form_4_Materials_View";
 import Form_5_Finalized_View from "./modules/form-5-finalized/Form_5_Finalized_View";
+import Form_2_Workforce_Latest_View from "./modules/form-2-workforce-latest/Form_2_Workforce_Latest_View";
 
 
 const Stack = createStackNavigator();
@@ -33,6 +34,7 @@ const StackNavigator = ()=>{
                 <Stack.Screen name='Form_3_Tools_View' component={Form_3_Tools_View} />
                 <Stack.Screen name='Form_4_Materials_View' component={Form_4_Materials_View} />
                 <Stack.Screen name='Form_5_Finalized_View' component={Form_5_Finalized_View} />
+                <Stack.Screen name='Form_2_Workforce_Latest_View' component={Form_2_Workforce_Latest_View} />
 
             </Stack.Navigator>
         </NavigationContainer>

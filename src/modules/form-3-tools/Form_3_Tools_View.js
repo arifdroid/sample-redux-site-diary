@@ -63,7 +63,7 @@ const Form_3_Tools_View = ({ navigation, route }) => {
     },[toolsNumber])
 
 
-    console.log('toolsArray ==>', toolsArray)
+    // console.log('toolsArray ==>', toolsArray)
 
     return (
 
@@ -144,7 +144,7 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
                     <TouchableOpacity onPress={() => setToolsNumber((prevState) => {
                         setToolsNumber(prevState + 1)
-                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: 'red' }}>+ add tools</Text></TouchableOpacity>
+                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: '#FF5B74' }}>+ add tools</Text></TouchableOpacity>
 
 
 

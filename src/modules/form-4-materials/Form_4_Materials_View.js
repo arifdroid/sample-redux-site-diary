@@ -145,7 +145,7 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
                     <TouchableOpacity onPress={() => setToolsNumber((prevState) => {
                         setToolsNumber(prevState + 1)
-                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: 'red' }}>+ add materials</Text></TouchableOpacity>
+                    })}><Text style={{ marginTop: 10, marginLeft: 10, color: '#FF5B74' }}>+ add materials</Text></TouchableOpacity>
 
 
 

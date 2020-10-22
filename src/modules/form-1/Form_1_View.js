@@ -153,7 +153,7 @@ const Form_1_View = ({ navigation, route }) => {
 
         console.log('project data is', project_obj)
 
-        navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
+        navigation.navigate('Form_2_Workforce_Latest_View', { project_obj });
     }
 
 
