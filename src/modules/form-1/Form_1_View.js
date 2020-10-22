@@ -60,14 +60,15 @@ const Form_1_View = ({ navigation, route }) => {
       };
      
       const handleConfirm = (date) => {
-        // console.log("A date has been picked: ", date.toString().substring(16,21));
-        setStartTime(date)
+        console.log("A date has been picked: ",date);
+
+        setStartTime(date.toString().substring(16,21))
         hideDatePicker();
       };
 
       const handleStopTimeConfirm = (date) => {
-        // console.log("A date has been picked: ", date.toString().substring(16,21));
-        setStopTime(date)
+        console.log("A date has been picked: ", date);
+        setStopTime(date.toString().substring(16,21))
         hideStopTimePicker();
       };
 
@@ -96,37 +97,6 @@ const Form_1_View = ({ navigation, route }) => {
 
     }, [])
 
-    const _CreateApi = async () => {
-
-        try {
-
-            let data = await axios.get(`${URL}/api/list-site-logs`);
-
-            //  console.log('data is ', data)
-
-
-        } catch (error) {
-
-        }
-
-
-
-
-    }
-
-    // useEffect(()=>{
-
-    //     let project_obj = {
-    //         projectName:projectName,
-    //         projectContractor: projectContractor,
-    //         projectLocation:projectLocation,
-    //         projectContractor_Number:projectContractor_Number
-    //     };
-
-
-
-    // }, [projectName, projectContractor, projectLocation, projectContractor_Number])
-
     const __next = () => {
 
         let project_obj = null;
@@ -142,10 +112,10 @@ const Form_1_View = ({ navigation, route }) => {
             else site_cond='dry';
 
             project_obj = {
-                projectName: projectName,
-                projectContractor: projectContractor,
-                projectLocation: projectLocation,
-                projectContractor_Number: projectContractor_Number,
+                project_name: projectName,
+                contractor: projectContractor,
+                location: projectLocation,
+                contractor_no: projectContractor_Number,
                 weather: weather_now,
                 rain_start:startTime==''? null:startTime,
                 rain_stop:stopTime==''? null:stopTime,
@@ -236,15 +206,14 @@ const Form_1_View = ({ navigation, route }) => {
                             leftText={"Rainy Day"}
                         />
 
-                        {toggleCheckBox_rainy == true ?
+                        
                             <>
                                 <Text style={{ marginTop: 20, fontSize: 16, marginLeft: 10 }}>
                                     Raining Period</Text>
-                                <View>
-                                    {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
+                                <View>                                    
                                     <TouchableOpacity onPress={showDatePicker}>
                                     <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
-                                    Start time : {startTime.toString().substring(16,21)}</Text>
+                                    Start time : {startTime}</Text>
                                     </TouchableOpacity>
                                     <DateTimePickerModal
                                         mode='time'
@@ -260,7 +229,7 @@ const Form_1_View = ({ navigation, route }) => {
                                     {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
                                     <TouchableOpacity onPress={showStopTimePicker}>
                                     <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
-                                    Stop time : {stopTime.toString().substring(16,21)}</Text>
+                                    Stop time : {stopTime}</Text>
                                     </TouchableOpacity>
                                     <DateTimePickerModal
                                         mode='time'
@@ -288,10 +257,7 @@ const Form_1_View = ({ navigation, route }) => {
                         />
 
 
-                            </> :
-                            <>
-                            </>
-                        }
+                            </> 
 
 
 

@@ -33,14 +33,16 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
 
         if (route.params) {
             const { project_obj } = route.params
-
-            console.log('project_obj ->', project_obj)
+            console.log('\n\n===\n')
+            console.log('currentProjectCreate ->', currentProjectCreate)
+            console.log('\n===\n\n')
 
 
         } else {
             //load API
 
         }
+        console.log('currentProjectCreate ->', currentProjectCreate)
 
     }, [])
 
