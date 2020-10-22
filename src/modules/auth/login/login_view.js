@@ -17,7 +17,7 @@ const Login_View = ({ navigation }) => {
 
     const __onChangeText_phone = (val) => setPhone(val)
     const __onChangeText_password = (val) => setPwd(val)
-    const [refToken_context, setRefToken_context] = useContext(UserData_Context)
+    const [refToken_context, setRefToken_context,currentUser, setCurrentUser] = useContext(UserData_Context)
 
     const __pressLogin = async () => {
         
@@ -30,9 +30,12 @@ const Login_View = ({ navigation }) => {
             }
 
 
-            let token = await axios.post(`${URL_DEV_2}/api/auth/sign-in?api_key=${url_api_key}`, { data });
-            if (token) {
-                setRefToken_context(token.data)
+            let resp = await axios.post(`${URL_DEV_2}/api/auth/sign-in?api_key=${url_api_key}`, { data });
+
+            // console.log('data response is', token)
+            if (resp.data) {
+                setRefToken_context(resp.data.token)
+                setCurrentUser(resp.data.user)
                 navigation.navigate('Main_List_ProjectLog_view')
             }
 

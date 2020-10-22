@@ -19,9 +19,9 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
     }, [])
 
     const [dataToRender, setDataToRender] = useState(null);
-    const [refToken_context, setRefToken_context] = useContext(UserData_Context)
+    const [refToken_context, setRefToken_context,currentUser, setCurrentUser] = useContext(UserData_Context)
 
-    const [name, setName]= useState('');
+    // const [name, setName]= useState('');
 
 
 
@@ -56,6 +56,8 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
     }
 
+    console.log('current user is->', currentUser)
+
     const __select = (item) => {
         navigation.navigate('Form_1_View', { item })
     }
@@ -74,7 +76,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
 
         >
             {/* <Modal_Error visible={modal_error}/> */}
-    <Text style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10, marginTop: 15 }}>Engineer {name}</Text>
+    <Text style={{ alignSelf: 'flex-end', marginRight: 30, marginBottom: 10, marginTop: 15 }}>Engineer {currentUser.name}</Text>
             <Text style={{ marginLeft: 35, marginBottom: 10 }}>Most Recent</Text>
             {/* <Button title='error' onPress={()=>{
                 setModal_error(true)

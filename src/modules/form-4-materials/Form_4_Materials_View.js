@@ -40,6 +40,7 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
+        navigation.navigate('Form_5_Finalized_View')
 
     }
 

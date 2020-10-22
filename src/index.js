@@ -11,6 +11,7 @@ import tac_View from "./modules/auth/tac/tac_View";
 import SignUpForm_View from "./modules/auth/signup/signUpForm_View";
 import Form_3_Tools_View from "./modules/form-3-tools/Form_3_Tools_View";
 import Form_4_Materials_View from "./modules/form-4-materials/Form_4_Materials_View";
+import Form_5_Finalized_View from "./modules/form-5-finalized/Form_5_Finalized_View";
 
 
 const Stack = createStackNavigator();
@@ -31,6 +32,7 @@ const StackNavigator = ()=>{
                 <Stack.Screen name='SignUpForm_View' component={SignUpForm_View} />
                 <Stack.Screen name='Form_3_Tools_View' component={Form_3_Tools_View} />
                 <Stack.Screen name='Form_4_Materials_View' component={Form_4_Materials_View} />
+                <Stack.Screen name='Form_5_Finalized_View' component={Form_5_Finalized_View} />
 
             </Stack.Navigator>
         </NavigationContainer>

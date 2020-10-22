@@ -9,7 +9,7 @@ const TextInput_Only = ({ onChangeText, styles , imagePass, valuePass, stylesBot
 
             <View style={[{ flexDirection: 'row', height: 50, alignSelf: 'center' }, inputBackgroundStyle]}>
                 <Image source={imagePass} style={{ height: 15, alignSelf: 'center', flex: 0.5 }} resizeMode='contain'></Image>
-                <TextInput style={styles} onChangeText={(val) => onChangeText(val)} value={valuePass} />
+                <TextInput style={styles} onChangeText={(val) => onChangeText(val)} value={valuePass} multiline={true}/>
 
             </View>
             <View style={[{

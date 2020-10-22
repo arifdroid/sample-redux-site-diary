@@ -22,7 +22,7 @@ const SignUpForm_View = ({ navigation, route }) => {
     const [company, setCompany] = useState('');
     const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
-    const [refToken_context, setRefToken_context ] = useContext(UserData_Context)    
+    const [refToken_context, setRefToken_context,currentUser, setCurrentUser ] = useContext(UserData_Context)    
     
     const [toggleCheckBox, setToggleCheckBox] = useState(false)
 
@@ -53,16 +53,17 @@ const SignUpForm_View = ({ navigation, route }) => {
             //  let data = await axios.get(`${URL}/api/list-site-logs`);
 
             let data = {
-                userName:userName,
+                name:userName,
                 position:position,
                 company:company,
                 phone:phone,
                 pwd:password
             }
 
-            let token =  await axios.post(`${URL_DEV_2}/api/auth/sign-up?api_key=${url_api_key}`,{data});            
-            if(token){
-                setRefToken_context(token.data)
+            let resp =  await axios.post(`${URL_DEV_2}/api/auth/sign-up?api_key=${url_api_key}`,{data});            
+            if (resp.data) {
+                setRefToken_context(resp.data.token)
+                setCurrentUser(resp.data.user)
                 navigation.navigate('Main_List_ProjectLog_view')
             }
 
