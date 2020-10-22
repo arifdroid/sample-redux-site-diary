@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, Text, View, Button, } from 'react-native';
 import CardView from 'react-native-cardview';
 import CheckBox from 'react-native-check-box';
@@ -9,6 +9,7 @@ import { styles } from "../../common/styles";
 import moment from "moment";
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { UserData_Context } from '../../context-provider/UserContext';
 
 
 
@@ -23,6 +24,8 @@ const Form_1_View = ({ navigation, route }) => {
     const [projectLocation, setProjectLocation] = useState('');
     const [projectContractor, setProjectContractor] = useState('');
     const [projectContractor_Number, setProjectContractor_Number] = useState('');
+
+    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
 
 
 
@@ -151,9 +154,11 @@ const Form_1_View = ({ navigation, route }) => {
 
         }
 
-        console.log('project data is', project_obj)
+        // console.log('project data is', project_obj)
 
-        navigation.navigate('Form_2_Workforce_Latest_View', { project_obj });
+        setProjectCreate(project_obj)
+
+        navigation.navigate('Form_2_Workforce_Latest_View');
     }
 
 

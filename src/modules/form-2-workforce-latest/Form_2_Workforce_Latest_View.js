@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, Text, View, CheckBox, Alert } from 'react-native';
 import CardView from 'react-native-cardview';
 
@@ -7,6 +7,7 @@ import { styles } from "../../common/styles";
 import FormDropdown from '../../common/components/form-dropdown/Form-Dropdown';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { UserData_Context } from '../../context-provider/UserContext';
 
 const data = ['malay', 'chinese', 'indian', 'bangladesh', 'nepal', 'vietnam', 'indonesians', 'others']
 
@@ -19,15 +20,19 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
     const [toolsEditListener, setToolsEditListener] = useState('');
     const [toolsQuantityEditListener, setToolsQuantityEditListener] = useState('');
 
+    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
+
     const [toolsArray, setToolsArray] = useState([]);
 
     const [navNext, setNavNext] = useState(false);
     const [pressNext, setPressNext] = useState(false);
 
+    // const[project_obj, setProject_obj]
+
     useEffect(() => {
 
         if (route.params) {
-            let { project_obj } = route.params
+            const { project_obj } = route.params
 
             console.log('project_obj ->', project_obj)
 
@@ -125,7 +130,10 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
             }
         })
 
-        navigation.navigate('Form_3_Tools_View',{project_obj, workforces })
+        
+        let project_object = {currentProjectCreate,workforces} 
+        setProjectCreate(project_object)
+        navigation.navigate('Form_3_Tools_View',{ })
        
     }
 

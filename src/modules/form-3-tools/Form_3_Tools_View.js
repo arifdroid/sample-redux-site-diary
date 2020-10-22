@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
 import CardView from 'react-native-cardview';
 
@@ -7,6 +7,7 @@ import { styles } from "../../common/styles";
 import FormDropdown from '../../common/components/form-dropdown/Form-Dropdown';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { FlatList, ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { UserData_Context } from '../../context-provider/UserContext';
 
 const data = ['malay', 'chinese', 'indian', 'bangladesh', 'nepal', 'vietnam', 'indonesians', 'others']
 
@@ -19,16 +20,21 @@ const Form_3_Tools_View = ({ navigation, route }) => {
     const [toolsEditListener, setToolsEditListener] = useState('');
     const [toolsQuantityEditListener, setToolsQuantityEditListener] = useState('');
 
-
-
     const [toolsArray, setToolsArray] = useState([]);
+
+
+    const [navNext, setNavNext] = useState(false);
+    const [pressNext, setPressNext] = useState(false);
+
+    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
 
     useEffect(() => {
 
         if (route.params) {
-            let { project_obj } = route.params
+            const { project_obj,workforces } = route.params
 
-            console.log('project_obj ->', project_obj)
+            // console.log('project_obj ->', project_obj)
+            // console.log('workforces ->', workforces)
 
 
         } else {
@@ -40,30 +46,99 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
-        navigation.navigate('Form_4_Materials_View')
+
+        if (toolsEditListener != '') {
+
+            setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
+            setPressNext(true);
+
+
+        } else {
+            Alert.alert('please insert values')
+        }
+        // navigation.navigate('Form_4_Materials_View')
     }
 
-    useEffect(()=>{
-        if(toolsNumber){
-            setToolsArray((prevState)=>{
+    useEffect(() => {
+        if (toolsNumber) {
+            setToolsArray((prevState) => {
                 let arr = [...prevState];
-                arr.forEach((el,i)=>{
-                    if(el.toolsNumber == (toolsNumber-1)){
+                arr.forEach((el, i) => {
+                    if (el.toolsNumber == (toolsNumber - 1)) {
                         el.name = toolsEditListener.name
                         el.quantity = toolsQuantityEditListener.quantity
                     }
                 })
-                arr.push({name:'edit', quantity:0, toolsNumber:toolsNumber});
+                arr.push({ name: 'edit', quantity: 0, toolsNumber: toolsNumber });
                 return arr;
 
             });
 
-            
+
         }
-    },[toolsNumber])
+    }, [toolsNumber])
+
+    useEffect(()=>{
+
+        if(toolsArray && pressNext){
+            setNavNext(true)
+        }
+
+    },[toolsArray])
+
+    useEffect(() => {
+
+        if (navNext) {
 
 
-    // console.log('toolsArray ==>', toolsArray)
+            __cleanUpData();
+
+        }
+
+    }, [navNext])
+
+    const __cleanUpData=()=>{
+
+        let filter_edit = toolsArray.filter(el=>el.name!='edit')
+        
+        // console.log('tool edit cehck', filter_edit)
+        
+        let filter_duplicate = [];
+
+        let filter_edit_length = filter_edit.length;
+
+        if(filter_edit_length>1){
+            
+            if(filter_edit[filter_edit_length-1].name == filter_edit[filter_edit_length-2].name){
+                filter_edit.pop();
+                filter_duplicate = filter_edit;
+            }else{
+                filter_duplicate = filter_edit
+            }
+        }else{
+            filter_duplicate = filter_edit
+        }
+
+
+        let tools = filter_duplicate.map(el=>{
+            return{                
+                        tool_name:el.name,
+                        number:el.quantity
+            }
+        })
+
+
+        // console.log('final tools is', tools)
+
+        let project_obj ={ ...currentProjectCreate, tools};
+
+        setProjectCreate(project_obj)
+        
+
+        navigation.navigate('Form_4_Materials_View',{})
+       
+    }
+
 
     return (
 
@@ -96,45 +171,45 @@ const Form_3_Tools_View = ({ navigation, route }) => {
                     <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
                         Tools</Text>
 
-                    <View style={{flexDirection:'row',marginTop: 15,  marginLeft: 10, marginBottom:10}}>
-                    <Text style={{ fontSize: 16, flex:1}}>
-                        Tools List</Text>
-                        <Text style={{ fontSize: 16,flex:0.4 }}>
-                        Quantity</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 15, marginLeft: 10, marginBottom: 10 }}>
+                        <Text style={{ fontSize: 16, flex: 1 }}>
+                            Tools List</Text>
+                        <Text style={{ fontSize: 16, flex: 0.4 }}>
+                            Quantity</Text>
                     </View>
 
-                    
+
 
 
                     <FlatList
                         data={toolsArray}
-                        renderItem={({ item , index}) => {
+                        renderItem={({ item, index }) => {
                             return (
                                 <>
-                                <View style={{ flexDirection: 'row', marginLeft:10,  marginBottom:3 , flex:1, marginEnd:10}}>
-                                    <View style={{flex:1, backgroundColor:'#f0f4ff', height:30, justifyContent:'center'}}>
-                                    <TextInput  styles={{  }}
-                                    onChangeText={val=>{
-                                        setToolsEditListener({name:val, toolsNumber:item.toolsNumber})
-                                    }}
+                                    <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                        <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput styles={{}}
+                                                onChangeText={val => {
+                                                    setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
+                                                }}
 
-                                    />
-                                    
+                                            />
+
+                                        </View>
+                                        <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput
+                                                styles={{ backgroundColor: '#C3CDE6' }}
+                                                onChangeText={val => {
+                                                    setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
+                                                }}
+
+                                            />
+
+                                        </View>
+
+
                                     </View>
-                                    <View style={{marginLeft:10, flex:0.4, backgroundColor:'#f0f4ff', height:30,justifyContent:'center'}}>
-                                    <TextInput                                     
-                                     styles={{backgroundColor:'#C3CDE6'}}
-                                     onChangeText={val=>{
-                                        setToolsQuantityEditListener({quantity:val, toolsNumber:item.toolsNumber})
-                                    }}
 
-                                    />
-                                    
-                                    </View>
-
-
-                                </View>
-                                
                                 </>
                             )
 
