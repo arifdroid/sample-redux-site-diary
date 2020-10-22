@@ -7,9 +7,11 @@ import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
 import moment from "moment";
+import { URL, URL_DEV_2,url_api_key } from "@env"
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { UserData_Context } from '../../context-provider/UserContext';
+import axios from 'react-native-axios/lib/axios';
 
 
 
@@ -31,7 +33,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
     const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate] = useContext(UserData_Context);
 
 
-  
+
     useEffect(() => {
 
         console.log('final page project date', currentProjectCreate)
@@ -42,7 +44,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
 
         try {
 
-            let data = await axios.get(`${URL}/api/list-site-logs`);
+            // let data = await axios.get(`${URL}/api/list-site-logs`);
 
             //  console.log('data is ', data)
 
@@ -56,35 +58,44 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
 
     }
 
-  
-    const __next = () => {
 
-        let project_obj = null;
+    const __next = async () => {
 
-        // if (projectName || projectContractor || projectLocation || projectContractor_Number) {
+        try {
 
-        //     let weather_now;
-        //     if (toggleCheckBox_rainy) weather_now = 'rainy'
-        //     else weather_now = 'sunny'
+            console.log('\n\n======\n')
+            console.log('currentProjectCreate', {currentProjectCreate})
+            console.log('\n======\n\n')
 
-        //     let site_cond;
-        //     if (toggleCheckBox__site_condition) site_cond = 'wet'
-        //     else site_cond = 'dry';
+            let config = {
+                headers: {
+                    'Authorization': `Bearer ${refToken_context}`
+                }
+            
+            
+            }
 
-        //     project_obj = {
-        //         projectName: projectName,
-        //         projectContractor: projectContractor,
-        //         projectLocation: projectLocation,
-        //         projectContractor_Number: projectContractor_Number,
-        //         weather: weather_now,
-        //         rain_start: startTime,
-        //         rain_stop: stopTime,
-        //         site_condition: site_cond
-        //     };
+            let data = {
+                ...currentProjectCreate,
+                work_done: project_WorkDone,
+                work_delayed: project_WorkDelayed,
+                instructions: project_Instructions,
+                visitor: project_Visitor,
+                test_done: project_TestDone,
+                site_supervisor_comment: project_SVComment
 
-        // }
+            }
 
-        console.log('project data is', project_obj)
+            console.log('data to be created is', data)
+
+            let project_created = await axios.post(`${URL_DEV_2}/api/create-site-logs?api_key=${url_api_key}`, {data},config)
+
+            if(project_created) navigation.navigate('Main_List_ProjectLog_view');
+
+
+        } catch (error) {
+            console.log('error is ', error)
+        }
 
         // navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
     }

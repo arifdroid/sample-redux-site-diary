@@ -1,0 +1,30 @@
+{
+    "projectContractor": "projek 3",
+    "projectLocation": "lokasi 3",
+    "contractor": "ss 3",
+    "contractor_no": "3",
+    "weather": "sunny",
+    "tools": [
+        {
+            "tool_name": "nama tools 9",
+            "number": 7
+        },
+        {
+            "tool_name": "nama tools 10",
+            "number": 8
+        }
+    ],
+    "workforces": [
+        {
+            "sub_con_name": "workforces 1",
+            "number": 22,
+            "ethnicity": "malay"
+        }
+    ],
+    "materials": [
+        {
+            "material_name": "check",
+            "number": 2
+        }
+    ]
+}

@@ -61,13 +61,13 @@ const Form_1_View = ({ navigation, route }) => {
      
       const handleConfirm = (date) => {
         // console.log("A date has been picked: ", date.toString().substring(16,21));
-        setStartTime(date.toString().substring(16,21))
+        setStartTime(date)
         hideDatePicker();
       };
 
       const handleStopTimeConfirm = (date) => {
         // console.log("A date has been picked: ", date.toString().substring(16,21));
-        setStopTime(date.toString().substring(16,21))
+        setStopTime(date)
         hideStopTimePicker();
       };
 
@@ -147,8 +147,8 @@ const Form_1_View = ({ navigation, route }) => {
                 projectLocation: projectLocation,
                 projectContractor_Number: projectContractor_Number,
                 weather: weather_now,
-                rain_start:startTime,
-                rain_stop:stopTime,
+                rain_start:startTime==''? null:startTime,
+                rain_stop:stopTime==''? null:stopTime,
                 site_condition:site_cond
             };
 
@@ -244,7 +244,7 @@ const Form_1_View = ({ navigation, route }) => {
                                     {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
                                     <TouchableOpacity onPress={showDatePicker}>
                                     <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
-                                    Start time : {startTime}</Text>
+                                    Start time : {startTime.toString().substring(16,21)}</Text>
                                     </TouchableOpacity>
                                     <DateTimePickerModal
                                         mode='time'
@@ -260,7 +260,7 @@ const Form_1_View = ({ navigation, route }) => {
                                     {/* <Button title="Pick Time" onPress={showDatePicker} /> */}
                                     <TouchableOpacity onPress={showStopTimePicker}>
                                     <Text style={{ marginTop: 10, fontSize: 14, marginLeft: 10, color:'gray' }}>
-                                    Stop time : {stopTime}</Text>
+                                    Stop time : {stopTime.toString().substring(16,21)}</Text>
                                     </TouchableOpacity>
                                     <DateTimePickerModal
                                         mode='time'

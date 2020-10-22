@@ -1,0 +1,40 @@
+{
+    "projectName": "Project KLCC",
+    "projectContractor": "Contractor",
+    "projectLocation": "KLCC",
+    "projectContractor_Number": "101",
+    "weather": "sunny",
+    "rain_start": "",
+    "rain_stop": "",
+    "site_condition": "dry",
+    "workforces": [
+        {
+            "sub_con_name": "sub con name",
+            "ethnicity": "Malay",
+            "number": 2
+        },
+        {
+            "sub_con_name": "sub con name",
+            "ethnicity": "Cons",
+            "number": 3
+        }
+    ],
+    "tools": [
+        {
+            "tool_name": "Hammer",
+            "number": 2
+        }
+    ],
+    "materials": [
+        {
+            "material_name": "Simeon",
+            "number": 1
+        }
+    ],
+    "work_done": "Null",
+    "work_delayed": "All finished",
+    "instructions": "Getting ready instructions",
+    "visitor": "Visitor 1",
+    "test_done": "Test1",
+    "site_supervisor_comment": "Ss"
+}

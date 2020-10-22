@@ -38,7 +38,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
             
             }
             
-            let user = await axios.get(`${URL_DEV_2}/api/list-site-logs`, config)
+            
 
             let data = await axios.get(`${URL_DEV_2}/api/list-site-logs`, config)
 

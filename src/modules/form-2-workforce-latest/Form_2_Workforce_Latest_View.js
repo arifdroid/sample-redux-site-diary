@@ -131,7 +131,7 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
         })
 
         
-        let project_object = {currentProjectCreate,workforces} 
+        let project_object = {...currentProjectCreate,workforces} 
         setProjectCreate(project_object)
         navigation.navigate('Form_3_Tools_View',{ })
        
