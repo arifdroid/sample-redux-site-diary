@@ -19,8 +19,9 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
 
     const [toolsEditListener, setToolsEditListener] = useState('');
     const [toolsQuantityEditListener, setToolsQuantityEditListener] = useState('');
+    const [contractorName, setContractorName] = useState('')
 
-    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate, projectSelected, setProjectSelected, isReadOnly_Context, setIsReadOnly_Context] = useContext(UserData_Context);
 
     const [toolsArray, setToolsArray] = useState([]);
 
@@ -31,45 +32,56 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
 
     useEffect(() => {
 
-        if (route.params) {
-            const { project_obj } = route.params
-            console.log('\n\n===\n')
-            console.log('currentProjectCreate ->', currentProjectCreate)
-            console.log('\n===\n\n')
 
+        if (isReadOnly_Context) {
+            //load data
+            let data_workforces = projectSelected.workforces.map(el => {
+                return {
+                    name: el.ethnicity,
+                    quantity: el.number.toString()
+                }
+            })
 
-        } else {
-            //load API
+            setToolsArray(data_workforces);
 
         }
-        console.log('currentProjectCreate ->', currentProjectCreate)
+
 
     }, [])
 
 
     const __pressLogin = () => {
+        
 
-        if (toolsEditListener != '') {
+        if (isReadOnly_Context) {
+            navigation.navigate('Form_3_Tools_View',)
+
+        } else {
+
+            if (toolsEditListener != '') {
 
                 setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
                 setPressNext(true);
-         
 
-        } else {
-            Alert.alert('please insert values')
+
+            } else {
+                Alert.alert('please insert values')
+            }
         }
 
     }
 
+    console.log('workforces array', toolsArray)
 
 
-    useEffect(()=>{
 
-        if(toolsArray && pressNext){
+    useEffect(() => {
+
+        if (toolsArray && pressNext) {
             setNavNext(true)
         }
 
-    },[toolsArray])
+    }, [toolsArray])
 
     useEffect(() => {
         if (toolsNumber) {
@@ -96,47 +108,48 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
         if (navNext) {
 
 
+
             __cleanUpData();
 
         }
 
     }, [navNext])
 
-    const __cleanUpData=()=>{
+    const __cleanUpData = () => {
 
-        let filter_edit = toolsArray.filter(el=>el.name!='edit')
-       
-        
+        let filter_edit = toolsArray.filter(el => el.name != 'edit')
+
+
         let filter_duplicate = [];
 
         let filter_edit_length = filter_edit.length;
 
-        if(filter_edit_length>1){
-            
-            if(filter_edit[filter_edit_length-1].name == filter_edit[filter_edit_length-2].name){
+        if (filter_edit_length > 1) {
+
+            if (filter_edit[filter_edit_length - 1].name == filter_edit[filter_edit_length - 2].name) {
                 filter_edit.pop();
                 filter_duplicate = filter_edit;
-            }else{
+            } else {
                 filter_duplicate = filter_edit
             }
-        }else{
+        } else {
             filter_duplicate = filter_edit
         }
 
 
-        let workforces = filter_duplicate.map(el=>{
-            return{
-                sub_con_name:'sub con name',
-                        ethnicity:el.name,
-                        number:el.quantity
+        let workforces = filter_duplicate.map(el => {
+            return {
+                sub_con_name: 'sub con name',
+                ethnicity: el.name,
+                number: el.quantity
             }
         })
 
-        
-        let project_object = {...currentProjectCreate,workforces} 
+
+        let project_object = { ...currentProjectCreate, workforces }
         setProjectCreate(project_object)
-        navigation.navigate('Form_3_Tools_View',{ })
-       
+        navigation.navigate('Form_3_Tools_View', {})
+
     }
 
     return (
@@ -173,8 +186,9 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                     <Text style={{ marginTop: 15, fontSize: 16, marginLeft: 10 }}>
                         Subcon Name</Text>
 
-                    <TextInput_Only valuePass={'contractor name'} styles={{ width: '95%' }}
+                    <TextInput_Only valuePass={contractorName} styles={{ width: '95%' }}
                         inputBackgroundStyle={{ height: 40 }}
+                        onChangeText={(val) => setContractorName(val)}
                     />
 
                     <View style={{ flexDirection: 'row', marginTop: 15, marginLeft: 10, marginBottom: 10 }}>
@@ -191,32 +205,70 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                         data={toolsArray}
                         renderItem={({ item, index }) => {
                             return (
-                                <>
-                                    <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                        <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
-                                            <TextInput styles={{}}
-                                                onChangeText={val => {
-                                                    setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
-                                                }}
+                                <>{isReadOnly_Context == true ?
+                                    <>
+                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <TextInput styles={{}}
+                                                   editable={!isReadOnly_Context}
+                                                   value={item.name}
 
-                                            />
+
+                                                />
+
+                                            </View>
+                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <TextInput
+                                                    styles={{ backgroundColor: '#C3CDE6' }}
+                                                    editable={!isReadOnly_Context}
+                                                    value={item.quantity}
+
+
+                                                />
+
+                                            </View>
+
 
                                         </View>
-                                        <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
-                                            <TextInput
-                                                styles={{ backgroundColor: '#C3CDE6' }}
-                                                onChangeText={val => {
-                                                    setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
-                                                }}
 
-                                            />
+                                    </>
+
+
+                                    :
+
+                                    <>
+                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <TextInput styles={{}}
+                                                    onChangeText={val => {
+                                                        setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
+                                                    }}
+
+
+                                                />
+
+                                            </View>
+                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <TextInput
+                                                    styles={{ backgroundColor: '#C3CDE6' }}
+                                                    onChangeText={val => {
+                                                        setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
+                                                    }}
+
+
+                                                />
+
+                                            </View>
+
 
                                         </View>
 
+                                    </>
 
-                                    </View>
-
+                                }
                                 </>
+
+
                             )
 
                         }}></FlatList>

@@ -3,13 +3,13 @@ import { View, TextInput, Image, Text } from 'react-native';
 // import {  } from 'react-native-gesture-handler';
 
 
-const TextInput_Only = ({ onChangeText, styles , imagePass, valuePass, stylesBottomLine, inputBackgroundStyle},props) => {
+const TextInput_Only = ({ onChangeText, styles , imagePass, valuePass, stylesBottomLine, inputBackgroundStyle, disableTextInput},props) => {
     return (
         <>
 
             <View style={[{ flexDirection: 'row', height: 50, alignSelf: 'center' }, inputBackgroundStyle]}>
                 <Image source={imagePass} style={{ height: 15, alignSelf: 'center', flex: 0.5 }} resizeMode='contain'></Image>
-                <TextInput style={styles} onChangeText={(val) => onChangeText(val)} value={valuePass} multiline={true}/>
+                <TextInput style={styles} onChangeText={(val) => onChangeText(val)} value={valuePass} multiline={true} editable={disableTextInput}/>
 
             </View>
             <View style={[{

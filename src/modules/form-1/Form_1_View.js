@@ -7,9 +7,11 @@ import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
 import moment from "moment";
+import { URL, URL_DEV_2,url_api_key } from "@env"
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { UserData_Context } from '../../context-provider/UserContext';
+import axios from 'react-native-axios/lib/axios';
 
 
 
@@ -25,7 +27,11 @@ const Form_1_View = ({ navigation, route }) => {
     const [projectContractor, setProjectContractor] = useState('');
     const [projectContractor_Number, setProjectContractor_Number] = useState('');
 
-    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
+    //set readonly mode
+    const [isReadOnly,setIsReadOnly] = useState(false);
+    
+
+    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate,projectSelected, setProjectSelected ,isReadOnly_Context, setIsReadOnly_Context]= useContext(UserData_Context);
 
 
 
@@ -77,9 +83,14 @@ const Form_1_View = ({ navigation, route }) => {
         if (route.params) {
             let { new_form, item } = route.params
 
-            if (item) { //here populate
+            if (item) { //here populate ,, call API here
 
-                console.log('item picked', item)
+                setIsReadOnly(true);
+                setIsReadOnly_Context(true)
+
+                // console.log('item picked', item)
+                // console.log('current user', currentUser)
+                __projectDataAPI(item.id);
                 setProjectName(item.project_name);
                 setProjectLocation(item.location);
                 setProjectContractor(item.contractor);
@@ -89,13 +100,55 @@ const Form_1_View = ({ navigation, route }) => {
 
             } else { //create new
 
-
+                setIsReadOnly(false)
+                setProjectCreate(null)
+                setIsReadOnly_Context(false)
+                
 
 
             }
         }
 
     }, [])
+
+    const __projectDataAPI= async(id)=>{
+
+        try {
+
+
+            let config = {
+                headers: {
+                    'Authorization': `Bearer ${refToken_context}`
+                }
+            
+            
+            }
+            
+            
+
+            let data = await axios.get(`${URL_DEV_2}/api/find-site-logs/${id}?api_key=${url_api_key}`, config)
+
+            setProjectSelected(data.data)
+            console.log('data is', data.data)
+            if(data.data.weather == 'rainy'){
+                setToggleCheckBox_rainy(true)
+                setStartTime(data.data.rain_start)
+                setStopTime(data.data.rain_stop)
+                setToggleCheckBox_site_condition(true)
+                
+            }
+
+        
+
+            return;
+
+        } catch (error) {
+            console.log('error is ->', error)
+            Alert.alert('error server')
+
+        }
+
+    }
 
     const __next = () => {
 
@@ -112,6 +165,7 @@ const Form_1_View = ({ navigation, route }) => {
             else site_cond='dry';
 
             project_obj = {
+                user_id: currentUser.id,
                 project_name: projectName,
                 contractor: projectContractor,
                 location: projectLocation,
@@ -168,6 +222,7 @@ const Form_1_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={projectName} styles={{ width: '95%' }}
                             onChangeText={(val) => setProjectName(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -175,6 +230,7 @@ const Form_1_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={projectLocation} styles={{ width: '95%' }}
                             onChangeText={(val) => setProjectLocation(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -182,6 +238,7 @@ const Form_1_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={projectContractor} styles={{ width: '95%' }}
                             onChangeText={(val) => setProjectContractor(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -189,6 +246,7 @@ const Form_1_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
                             onChangeText={(val) => setProjectContractor_Number(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>

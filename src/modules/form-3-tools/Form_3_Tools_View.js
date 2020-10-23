@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
+import { SafeAreaView, TextInput, Text, View, CheckBox, Alert } from 'react-native';
 import CardView from 'react-native-cardview';
 
 import MainButton from '../../common/components/main-button/MainButton';
@@ -26,19 +26,15 @@ const Form_3_Tools_View = ({ navigation, route }) => {
     const [navNext, setNavNext] = useState(false);
     const [pressNext, setPressNext] = useState(false);
 
-    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate]= useContext(UserData_Context);
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate, projectSelected, setProjectSelected, isReadOnly_Context, setIsReadOnly_Context] = useContext(UserData_Context);
 
     useEffect(() => {
 
-        if (route.params) {
-            const { project_obj,workforces } = route.params
+        if (isReadOnly_Context) {
 
-            // console.log('project_obj ->', project_obj)
-            // console.log('workforces ->', workforces)
-
+            setToolsArray(projectSelected.tools);
 
         } else {
-            //load API
 
         }
 
@@ -46,15 +42,19 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
     const __pressLogin = () => {
 
-
-        if (toolsEditListener != '') {
-
-            setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
-            setPressNext(true);
-
-
+        if (isReadOnly_Context) {
+            navigation.navigate('Form_4_Materials_View')
         } else {
-            Alert.alert('please insert values')
+
+            if (toolsEditListener != '') {
+
+                setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
+                setPressNext(true);
+
+
+            } else {
+                Alert.alert('please insert values')
+            }
         }
         // navigation.navigate('Form_4_Materials_View')
     }
@@ -78,13 +78,13 @@ const Form_3_Tools_View = ({ navigation, route }) => {
         }
     }, [toolsNumber])
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(toolsArray && pressNext){
+        if (toolsArray && pressNext) {
             setNavNext(true)
         }
 
-    },[toolsArray])
+    }, [toolsArray])
 
     useEffect(() => {
 
@@ -97,47 +97,49 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
     }, [navNext])
 
-    const __cleanUpData=()=>{
+    const __cleanUpData = () => {
 
-        let filter_edit = toolsArray.filter(el=>el.name!='edit')
-        
+        let filter_edit = toolsArray.filter(el => el.name != 'edit')
+
         // console.log('tool edit cehck', filter_edit)
-        
+
         let filter_duplicate = [];
 
         let filter_edit_length = filter_edit.length;
 
-        if(filter_edit_length>1){
-            
-            if(filter_edit[filter_edit_length-1].name == filter_edit[filter_edit_length-2].name){
+        if (filter_edit_length > 1) {
+
+            if (filter_edit[filter_edit_length - 1].name == filter_edit[filter_edit_length - 2].name) {
                 filter_edit.pop();
                 filter_duplicate = filter_edit;
-            }else{
+            } else {
                 filter_duplicate = filter_edit
             }
-        }else{
+        } else {
             filter_duplicate = filter_edit
         }
 
 
-        let tools = filter_duplicate.map(el=>{
-            return{                
-                        tool_name:el.name,
-                        number:el.quantity
+        let tools = filter_duplicate.map(el => {
+            return {
+                tool_name: el.name,
+                number: el.quantity
             }
         })
 
 
         // console.log('final tools is', tools)
 
-        let project_obj ={ ...currentProjectCreate, tools};
+        let project_obj = { ...currentProjectCreate, tools };
 
         setProjectCreate(project_obj)
-        
 
-        navigation.navigate('Form_4_Materials_View',{})
-       
+
+        navigation.navigate('Form_4_Materials_View', {})
+
     }
+
+    console.log('tools array', toolsArray)
 
 
     return (
@@ -186,29 +188,59 @@ const Form_3_Tools_View = ({ navigation, route }) => {
                         renderItem={({ item, index }) => {
                             return (
                                 <>
-                                    <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                        <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
-                                            <TextInput styles={{}}
-                                                onChangeText={val => {
-                                                    setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
-                                                }}
+                                    {isReadOnly_Context == true ?
+                                        <>
+                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                    <TextInput styles={{}}
+                                                        editable={!isReadOnly_Context}
+                                                        value={item.tool_name}
+                                                    />
 
-                                            />
+                                                </View>
+                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                    <TextInput
+                                                        styles={{ backgroundColor: '#C3CDE6' }}
+                                                        editable={!isReadOnly_Context}
+                                                        value={item.number ? item.number.toString() : ''}
 
-                                        </View>
-                                        <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
-                                            <TextInput
-                                                styles={{ backgroundColor: '#C3CDE6' }}
-                                                onChangeText={val => {
-                                                    setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
-                                                }}
+                                                    />
 
-                                            />
-
-                                        </View>
+                                                </View>
 
 
-                                    </View>
+                                            </View>
+
+                                        </>
+
+                                        :
+                                        <>
+                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                    <TextInput styles={{}}
+                                                        onChangeText={val => {
+                                                            setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
+                                                        }}
+
+                                                    />
+
+                                                </View>
+                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                    <TextInput
+                                                        styles={{ backgroundColor: '#C3CDE6' }}
+                                                        onChangeText={val => {
+                                                            setToolsQuantityEditListener({ quantity: val, toolsNumber: item.toolsNumber })
+                                                        }}
+
+                                                    />
+
+                                                </View>
+
+
+                                            </View>
+
+                                        </>
+                                    }
 
                                 </>
                             )

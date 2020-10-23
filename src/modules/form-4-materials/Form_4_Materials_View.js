@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, TextInput, Text, View, CheckBox } from 'react-native';
+import { SafeAreaView, TextInput, Text, View, CheckBox, Alert } from 'react-native';
 import CardView from 'react-native-cardview';
 
 import MainButton from '../../common/components/main-button/MainButton';
@@ -20,7 +20,7 @@ const Form_4_Materials_View = ({ navigation, route }) => {
     const [toolsEditListener, setToolsEditListener] = useState('');
     const [toolsQuantityEditListener, setToolsQuantityEditListener] = useState('');
 
-    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate] = useContext(UserData_Context);
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate, projectSelected, setProjectSelected, isReadOnly_Context, setIsReadOnly_Context] = useContext(UserData_Context);
 
     const [toolsArray, setToolsArray] = useState([]);
 
@@ -29,12 +29,8 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
     useEffect(() => {
 
-        if (route.params) {
-
-            console.log('current project data is', currentProjectCreate)
-
-        } else {
-            //load API
+        if(isReadOnly_Context){
+            setToolsArray(projectSelected.materials);
 
         }
 
@@ -44,6 +40,10 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
         // navigation.navigate('Form_5_Finalized_View')
 
+        if(isReadOnly_Context){
+            navigation.navigate('Form_5_Finalized_View')
+        }else{
+
         if (toolsEditListener != '') {
 
             setToolsNumber((prevState) => { setToolsNumber(prevState + 1) });
@@ -52,7 +52,7 @@ const Form_4_Materials_View = ({ navigation, route }) => {
 
         } else {
             Alert.alert('please insert values')
-        }
+        }}
 
     }
 
@@ -178,7 +178,32 @@ const Form_4_Materials_View = ({ navigation, route }) => {
                         data={toolsArray}
                         renderItem={({ item, index }) => {
                             return (
-                                <>
+                                <>{isReadOnly_Context == true ? 
+                                    
+                                    <>
+                                    <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
+                                        <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput styles={{}}
+                                                editable={!isReadOnly_Context}
+                                                value={item.material_name}
+                                            />
+
+                                        </View>
+                                        <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <TextInput
+                                                styles={{ backgroundColor: '#C3CDE6' }}
+                                                editable={!isReadOnly_Context}
+                                                value={item.number? item.number.toString() : ''}
+                                            />
+
+                                        </View>
+
+
+                                    </View>
+
+                                </>:
+                                
+                                    <>
                                     <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
                                         <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
                                             <TextInput styles={{}}
@@ -204,6 +229,10 @@ const Form_4_Materials_View = ({ navigation, route }) => {
                                     </View>
 
                                 </>
+                                
+                                }
+                                </>
+                                
                             )
 
                         }}></FlatList>

@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import CardView from 'react-native-cardview';
 import MainButton from '../../common/components/main-button/MainButton';
 import { styles } from "../../common/styles";
-import { URL, URL_DEV_2 } from "@env"
+import { URL, URL_DEV_2,url_api_key } from "@env"
 import axios from 'react-native-axios';
 import moment from "moment";
 import Modal_Error from '../../common/components/modal-error/Modal_Error';
@@ -40,7 +40,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
             
             
 
-            let data = await axios.get(`${URL_DEV_2}/api/list-site-logs`, config)
+            let data = await axios.get(`${URL_DEV_2}/api/list-site-logs?api_key=${url_api_key}`, config)
 
 
             setDataToRender(data.data);

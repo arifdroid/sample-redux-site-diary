@@ -40,25 +40,6 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
 
     }, [])
 
-    const _CreateApi = async () => {
-
-        try {
-
-            // let data = await axios.get(`${URL}/api/list-site-logs`);
-
-            //  console.log('data is ', data)
-
-
-        } catch (error) {
-
-        }
-
-
-
-
-    }
-
-
     const __next = async () => {
 
         try {
