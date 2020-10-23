@@ -30,13 +30,20 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
     const [project_SVComment, setProject_SVComment] = useState('');
 
 
-    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate] = useContext(UserData_Context);
+    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate,projectSelected, setProjectSelected ,isReadOnly_Context, setIsReadOnly_Context]= useContext(UserData_Context);
 
 
 
     useEffect(() => {
 
-        console.log('final page project date', currentProjectCreate)
+        if(isReadOnly_Context){
+            setProject_WorkDone(projectSelected.work_done)
+            setProject_WorkDelayed(projectSelected.work_delayed)
+            setProject_Instructions(projectSelected.instructions)
+            setProject_Visitor(projectSelected.visitor)
+            setProject_TestDone(projectSelected.test_done)
+            setProject_SVComment(projectSelected.site_supervisor_comment)
+        }
 
     }, [])
 
@@ -81,6 +88,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
         // navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
     }
 
+    console.log('current user', currentUser)
 
 
 
@@ -118,6 +126,8 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_WorkDone} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_WorkDone(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
+                            
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -125,6 +135,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_WorkDelayed} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_WorkDelayed(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -132,6 +143,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_Instructions} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_Instructions(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -139,6 +151,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_Visitor} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_Visitor(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -146,6 +159,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_TestDone} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_TestDone(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -153,6 +167,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         <TextInput_Only valuePass={project_SVComment} styles={{ width: '95%' }}
                             onChangeText={(val) => setProject_SVComment(val)}
                             inputBackgroundStyle={{ height: 40 }}
+                            disableTextInput={!isReadOnly_Context}
                         />
 
 
@@ -173,7 +188,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                         backgroundColor: 'white',
                         // marginTop: 50,
                         // marginBottom: 80,
-                        paddingBottom: 100
+                        paddingBottom: 25
                     }}
                     cardElevation={4}
                     cardMaxElevation={4}
@@ -183,12 +198,9 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                             flex: 1,
                             marginHorizontal: 10,
                         }}>
-                        <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
-                            Prepared By</Text>
-                        {/* <TextInput_Only valuePass={projectContractor_Number} styles={{ width: '95%' }}
-                            onChangeText={(val) => setProjectContractor_Number(val)}
-                            inputBackgroundStyle={{ height: 40 }}
-                        /> */}
+                        <Text style={{ marginTop: 10, fontSize: 13, marginLeft: 10 }}>
+                    Prepared By :</Text>
+                        <Text style={{alignSelf: 'center',marginTop:10,fontSize: 16}}>{currentUser.name}</Text>
 
 
                     </View>
