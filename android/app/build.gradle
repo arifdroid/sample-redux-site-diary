@@ -131,6 +131,7 @@ android {
 
     defaultConfig {
         applicationId "com.site_diary_puo"
+        multiDexEnabled true
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -182,6 +183,8 @@ android {
 }
 
 dependencies {
+
+    implementation 'com.android.support:multidex:1.0.1'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

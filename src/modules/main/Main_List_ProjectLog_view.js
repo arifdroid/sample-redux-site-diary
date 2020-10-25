@@ -40,7 +40,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
             
             
 
-            let data = await axios.get(`${URL_DEV_2}/api/list-site-logs?api_key=${url_api_key}`, config)
+            let data = await axios.get(`${URL}/api/list-site-logs?api_key=${url_api_key}`, config)
 
 
             setDataToRender(data.data);
@@ -114,7 +114,7 @@ const Main_List_ProjectLog_view = ({ navigation, route }) => {
                         renderItem={({ item }) => {
                             return (
                                 <>
-                                    <View style={{ flex: 1 }}>
+                                    <View style={{ flex: 1 , marginVertical:5}}>
                                         <CardView
                                             style={{
 

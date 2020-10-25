@@ -3,7 +3,7 @@ import { SafeAreaView, Text, View, TouchableOpacity } from 'react-native';
 import MainButton from "../../../common/components/main-button/MainButton";
 import TextInput_Only from "../../../common/components/text-input-only/TextInput_Only";
 import { styles } from "../../../common/styles";
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import {
     CodeField,
     Cursor,
@@ -16,10 +16,10 @@ const CELL_COUNT = 6;
 const signUp_view = ({ navigation, route }) => {
 
     const [phone, setPhone] = useState(null);
-    
+
     const __onChangeText_phone = (val) => setPhone(val);
     const [confirm, setConfirm] = useState(null);
-    
+
 
     // code input view
 
@@ -37,7 +37,7 @@ const signUp_view = ({ navigation, route }) => {
             const confirmation = await auth().signInWithPhoneNumber(phone);
             console.log('confirmation code is', confirmation)
             setConfirm(confirmation);
-         
+
 
         } catch (error) {
             console.log('confirmation code error is', error)
@@ -48,10 +48,24 @@ const signUp_view = ({ navigation, route }) => {
     const __confirmTAC = async () => {
         try {
 
-            let check = await confirm.confirm(value);
+            let user_loggedin = await firebase.auth().currentUser;
             let phonePassed = phone;
-            if(check) navigation.navigate('SignUpForm_View', {phonePassed})
-            console.log('confirmation code TAC success is',)
+            console.log('user_login is', user_loggedin)
+
+            if (!user_loggedin) {
+                let check = await confirm.confirm(value);
+                if(check) navigation.navigate('SignUpForm_View', { phonePassed })
+            }else{
+                navigation.navigate('SignUpForm_View', { phonePassed })
+            }
+
+
+
+            
+
+            
+            // if (check || user_loggedin) navigation.navigate('SignUpForm_View', { phonePassed })
+            // console.log('confirmation code TAC success is',)
 
         } catch (error) {
             console.log('confirmation code TAC error is', error)
@@ -63,7 +77,7 @@ const signUp_view = ({ navigation, route }) => {
 
             <View style={{ width: '85%', alignSelf: 'center' }}>
                 <TextInput_Only styles={{ flex: 3, marginRight: 20 }} onChangeText={__onChangeText_phone} imagePass={require('../../../common/asset/phone.png')}></TextInput_Only>
-               
+
                 {confirm == null ?
                     <>
 

@@ -38,7 +38,7 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
             let data_workforces = projectSelected.workforces.map(el => {
                 return {
                     name: el.ethnicity,
-                    quantity: el.number.toString()
+                    quantity: el.number? el.number.toString(): 0
                 }
             })
 
@@ -207,8 +207,8 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                             return (
                                 <>{isReadOnly_Context == true ?
                                     <>
-                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, marginEnd: 10, height:42 }}>
+                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff',  justifyContent: 'center' }}>
                                                 <TextInput styles={{}}
                                                    editable={!isReadOnly_Context}
                                                    value={item.name}
@@ -217,9 +217,9 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                                                 />
 
                                             </View>
-                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', justifyContent: 'center'  }}>
                                                 <TextInput
-                                                    styles={{ backgroundColor: '#C3CDE6' }}
+                                                    styles={{  }}
                                                     editable={!isReadOnly_Context}
                                                     value={item.quantity}
 
@@ -237,8 +237,8 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                                     :
 
                                     <>
-                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                        <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10, height:42 }}>
+                                            <View style={{ flex: 1, backgroundColor: '#f0f4ff',  justifyContent: 'center' }}>
                                                 <TextInput styles={{}}
                                                     onChangeText={val => {
                                                         setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
@@ -248,7 +248,7 @@ const Form_2_Workforce_Latest_View = ({ navigation, route }) => {
                                                 />
 
                                             </View>
-                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', justifyContent: 'center' }}>
                                                 <TextInput
                                                     styles={{ backgroundColor: '#C3CDE6' }}
                                                     onChangeText={val => {

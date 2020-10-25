@@ -190,15 +190,15 @@ const Form_3_Tools_View = ({ navigation, route }) => {
                                 <>
                                     {isReadOnly_Context == true ?
                                         <>
-                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10, height:42 }}>
+                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff',  justifyContent: 'center' }}>
                                                     <TextInput styles={{}}
                                                         editable={!isReadOnly_Context}
                                                         value={item.tool_name}
                                                     />
 
                                                 </View>
-                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', justifyContent: 'center' }}>
                                                     <TextInput
                                                         styles={{ backgroundColor: '#C3CDE6' }}
                                                         editable={!isReadOnly_Context}
@@ -215,8 +215,8 @@ const Form_3_Tools_View = ({ navigation, route }) => {
 
                                         :
                                         <>
-                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10 }}>
-                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                            <View style={{ flexDirection: 'row', marginLeft: 10, marginBottom: 3, flex: 1, marginEnd: 10, height:42 }}>
+                                                <View style={{ flex: 1, backgroundColor: '#f0f4ff', justifyContent: 'center' }}>
                                                     <TextInput styles={{}}
                                                         onChangeText={val => {
                                                             setToolsEditListener({ name: val, toolsNumber: item.toolsNumber })
@@ -225,7 +225,7 @@ const Form_3_Tools_View = ({ navigation, route }) => {
                                                     />
 
                                                 </View>
-                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', height: 30, justifyContent: 'center' }}>
+                                                <View style={{ marginLeft: 10, flex: 0.4, backgroundColor: '#f0f4ff', justifyContent: 'center' }}>
                                                     <TextInput
                                                         styles={{ backgroundColor: '#C3CDE6' }}
                                                         onChangeText={val => {

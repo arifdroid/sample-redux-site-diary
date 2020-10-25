@@ -30,7 +30,7 @@ const Login_View = ({ navigation }) => {
             }
 
 
-            let resp = await axios.post(`${URL_DEV_2}/api/auth/sign-in?api_key=${url_api_key}`, { data });
+            let resp = await axios.post(`${URL}/api/auth/sign-in?api_key=${url_api_key}`, { data });
 
             // console.log('data response is', token)
             if (resp.data) {

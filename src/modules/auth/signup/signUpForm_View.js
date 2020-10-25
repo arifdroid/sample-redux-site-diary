@@ -9,6 +9,7 @@ import moment from "moment";
 import MainButton from '../../../common/components/main-button/MainButton';
 import axios from 'react-native-axios/lib/axios';
 import { UserData_Context } from '../../../context-provider/UserContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 
@@ -60,7 +61,7 @@ const SignUpForm_View = ({ navigation, route }) => {
                 pwd:password
             }
 
-            let resp =  await axios.post(`${URL_DEV_2}/api/auth/sign-up?api_key=${url_api_key}`,{data});            
+            let resp =  await axios.post(`${URL}/api/auth/sign-up?api_key=${url_api_key}`,{data});            
             if (resp.data) {
                 setRefToken_context(resp.data.token)
                 setCurrentUser(resp.data.user)
@@ -76,6 +77,7 @@ const SignUpForm_View = ({ navigation, route }) => {
 
 
     }
+    console.log('phone is', phone)
 
 
     const __next = async() => {
@@ -112,13 +114,14 @@ const SignUpForm_View = ({ navigation, route }) => {
     return (
 
         <SafeAreaView style={{ flex: 1 }}>
+            
             <CardView
                 style={{
                     borderRadius: 10,
                     paddingVertical: 20,
                     flex: 1,
                     marginHorizontal: 30,
-                    // height: 130,
+                    height: 130,
                     backgroundColor: 'white',
                     marginTop: 50,
                     marginBottom: 80
@@ -128,6 +131,7 @@ const SignUpForm_View = ({ navigation, route }) => {
                 radius={10}
 
             >
+                <ScrollView style={{}}>
                 <View
                     style={{
                         flex: 1,
@@ -174,7 +178,9 @@ const SignUpForm_View = ({ navigation, route }) => {
 
 
                 </View>
+                </ScrollView>
             </CardView>
+            
 
             <MainButton onPress={__next} buttonStyle={styles.button_new_log} textStyle={styles.button_text_login} buttonText={'Next'}></MainButton>
 

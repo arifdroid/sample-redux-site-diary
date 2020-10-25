@@ -7,7 +7,7 @@ import MainButton from '../../common/components/main-button/MainButton';
 import TextInput_Only from '../../common/components/text-input-only/TextInput_Only';
 import { styles } from "../../common/styles";
 import moment from "moment";
-import { URL, URL_DEV_2,url_api_key } from "@env"
+import { URL, URL_DEV_2, url_api_key } from "@env"
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { UserData_Context } from '../../context-provider/UserContext';
@@ -30,13 +30,13 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
     const [project_SVComment, setProject_SVComment] = useState('');
 
 
-    const [refToken_context,setRefToken_context,currentUser, setCurrentUser,currentProjectCreate, setProjectCreate,projectSelected, setProjectSelected ,isReadOnly_Context, setIsReadOnly_Context]= useContext(UserData_Context);
+    const [refToken_context, setRefToken_context, currentUser, setCurrentUser, currentProjectCreate, setProjectCreate, projectSelected, setProjectSelected, isReadOnly_Context, setIsReadOnly_Context] = useContext(UserData_Context);
 
 
 
     useEffect(() => {
 
-        if(isReadOnly_Context){
+        if (isReadOnly_Context) {
             setProject_WorkDone(projectSelected.work_done)
             setProject_WorkDelayed(projectSelected.work_delayed)
             setProject_Instructions(projectSelected.instructions)
@@ -49,40 +49,45 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
 
     const __next = async () => {
 
-        try {
+        if (isReadOnly_Context) {
+            navigation.navigate('Main_List_ProjectLog_view');
+        } else {
 
-            console.log('\n\n======\n')
-            console.log('currentProjectCreate', {currentProjectCreate})
-            console.log('\n======\n\n')
+            try {
 
-            let config = {
-                headers: {
-                    'Authorization': `Bearer ${refToken_context}`
+                console.log('\n\n======\n')
+                console.log('currentProjectCreate', { currentProjectCreate })
+                console.log('\n======\n\n')
+
+                let config = {
+                    headers: {
+                        'Authorization': `Bearer ${refToken_context}`
+                    }
+
+
                 }
-            
-            
+
+                let data = {
+                    ...currentProjectCreate,
+                    work_done: project_WorkDone,
+                    work_delayed: project_WorkDelayed,
+                    instructions: project_Instructions,
+                    visitor: project_Visitor,
+                    test_done: project_TestDone,
+                    site_supervisor_comment: project_SVComment
+
+                }
+
+                console.log('data to be created is', data)
+
+                let project_created = await axios.post(`${URL}/api/create-site-logs?api_key=${url_api_key}`, { data }, config)
+
+                if (project_created) navigation.navigate('Main_List_ProjectLog_view');
+
+
+            } catch (error) {
+                console.log('error is ', error)
             }
-
-            let data = {
-                ...currentProjectCreate,
-                work_done: project_WorkDone,
-                work_delayed: project_WorkDelayed,
-                instructions: project_Instructions,
-                visitor: project_Visitor,
-                test_done: project_TestDone,
-                site_supervisor_comment: project_SVComment
-
-            }
-
-            console.log('data to be created is', data)
-
-            let project_created = await axios.post(`${URL_DEV_2}/api/create-site-logs?api_key=${url_api_key}`, {data},config)
-
-            if(project_created) navigation.navigate('Main_List_ProjectLog_view');
-
-
-        } catch (error) {
-            console.log('error is ', error)
         }
 
         // navigation.navigate('Form_2_Workforce_ViewView', { project_obj });
@@ -127,7 +132,7 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                             onChangeText={(val) => setProject_WorkDone(val)}
                             inputBackgroundStyle={{ height: 40 }}
                             disableTextInput={!isReadOnly_Context}
-                            
+
                         />
 
                         <Text style={{ marginTop: 10, fontSize: 16, marginLeft: 10 }}>
@@ -199,8 +204,8 @@ const Form_5_Finalized_View = ({ navigation, route }) => {
                             marginHorizontal: 10,
                         }}>
                         <Text style={{ marginTop: 10, fontSize: 13, marginLeft: 10 }}>
-                    Prepared By :</Text>
-                        <Text style={{alignSelf: 'center',marginTop:10,fontSize: 16}}>{currentUser.name}</Text>
+                            Prepared By :</Text>
+                        <Text style={{ alignSelf: 'center', marginTop: 10, fontSize: 16 }}>{currentUser.name}</Text>
 
 
                     </View>

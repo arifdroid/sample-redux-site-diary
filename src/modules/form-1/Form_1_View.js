@@ -126,7 +126,7 @@ const Form_1_View = ({ navigation, route }) => {
             
             
 
-            let data = await axios.get(`${URL_DEV_2}/api/find-site-logs/${id}?api_key=${url_api_key}`, config)
+            let data = await axios.get(`${URL}/api/find-site-logs/${id}?api_key=${url_api_key}`, config)
 
             setProjectSelected(data.data)
             console.log('data is', data.data)
